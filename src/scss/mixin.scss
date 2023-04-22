@@ -1,0 +1,208 @@
+@mixin section-title {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #00c2c7;
+    padding-left: 5px;
+}
+
+
+// Expense box
+@mixin box-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #00c2c7;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+}
+
+
+
+
+@mixin res-full {
+    @media (max-width:1920px) {
+        @content;
+    }
+}
+
+@mixin res-hd-plus {
+    @media (max-width:1680px) {
+        @content;
+    }
+}
+
+@mixin res-hd {
+    @media (max-width:1500px) {
+        @content;
+    }
+}
+
+@mixin res-mac {
+    @media (max-width:1370px) {
+        @content;
+    }
+}
+
+@mixin res-xl {
+    @media (max-width:1200px) {
+        @content;
+    }
+}
+
+@mixin res-lg {
+    @media (max-width:992px) {
+        @content;
+    }
+}
+
+@mixin res-md {
+    @media (max-width:768px) {
+        @content;
+    }
+}
+
+@mixin res-sm {
+    @media (max-width:576px) {
+        @content;
+    }
+}
+
+@mixin res-ios {
+    @media (max-width:420px) {
+        @content;
+    }
+}
+
+@mixin res-mob {
+    @media (max-width:375px) {
+        @content;
+    }
+}
+
+@mixin res-small {
+    @media (max-width:325px) {
+        @content;
+    }
+}
+
+@mixin res-min-lg {
+    @media (min-width:992px) {
+        @content;
+    }
+}
+
+//  resoluções especificas
+@mixin res-1920x1080 {
+    @media (max-width:1921px) {
+        @content;
+    }
+}
+
+@mixin res-1680x1050 {
+    @media (max-width:1681px) {
+        @content;
+    }
+}
+
+@mixin res-1600x900 {
+    @media (max-width:1601px) {
+        @content;
+    }
+}
+
+@mixin res-1440x900 {
+    @media (max-width:1441px) {
+        @content;
+    }
+}
+
+@mixin res-1366x768 {
+    @media (max-width:1367px) {
+        @content;
+    }
+}
+
+@mixin res-1280x1024 {
+    @media (max-width:1281px) {
+        @content;
+    }
+}
+
+@mixin res-1280x800 {
+    @media (max-width:1281px) {
+        @content;
+    }
+}
+
+@mixin res-1280x950 {
+    @media (max-width:1281px) {
+        @content;
+    }
+}
+
+@mixin res-1024x800 {
+    @media (max-width:1025px) {
+        @content;
+    }
+}
+
+@mixin res-1100 {
+    @media (max-width:1111px) {
+        @content;
+    }
+}
+
+@mixin res-768x1024 {
+    @media (max-width:769px) {
+        @content;
+    }
+}
+
+@mixin res-320x568 {
+    @media (max-width:321px) {
+        @content;
+    }
+}
+
+@mixin res-min-1366 {
+    @media (min-width:1367px) {
+        @content;
+    }
+}
+
+
+// uso final 2021
+/* 
+1920x1080 = 6.1%
+1680x1050 = 5.1%
+1600x900 = 3.8%
+1440x900 = 7.3%
+1366x768 = 13.5%
+1280x1024 = 6.5%
+1280x800 = 19.5%
+1024x768 = 7.8%
+768x1024 = 7.3%
+320x480 = 11.4%
+
+em regras de uso
+1280x800 = 19.5%
+1366x1024 = 13.5%
+320x480 = 11.4%
+1024x768 = 7.8%
+1440x900 = 7.3%
+768x1024 = 7.3%
+1280x1024 = 6.5%
+1920x1080 = 6.1%
+1680x1050 = 5.1%
+1600x900 = 3.8%
+*/
+
+@mixin padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+
+    @include res-lg {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+}
