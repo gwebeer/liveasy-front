@@ -1,0 +1,51 @@
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-decoration: none;
+    line-height: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+    text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+    outline: none;
+
+    button:focus {
+        outline: none;
+        outline: none;
+    }
+
+    scroll-behavior: smooth;
+
+    a {
+        color: #000;
+
+        &:active,
+        &:focus {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        &:hover {
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+
+    // bootstrap resets
+    .form-control:focus {
+        color: unset;
+        background-color: unset;
+        border-color: unset;
+        outline: 0;
+        box-shadow: none;
+    }
+}
+
+html,
+body {
+    overflow-x: clip;
+    overflow-y: visible;
+    height: 100%;
+}
