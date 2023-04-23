@@ -2,6 +2,7 @@ import { isDisabled } from '@testing-library/user-event/dist/utils';
 import React, { Component } from 'react';
 import { MdArrowBackIosNew } from 'react-icons/md';
 import api from '../../config/api';
+import { saveToken } from '../../config/Auth';
 // import RegisterCard from '../RegisterCard.js/index.js';
 
 class AuthPage extends Component {
@@ -29,9 +30,14 @@ class AuthPage extends Component {
     async loginButton(e) {
         e.preventDefault()
 
-        await api.get('/user/register/weber_guilherme@outlook.com')
+        await api.get('/user/auth/' + this.state.form.email + '/' + this.state.form.password)
         .then(res => {
-            console.log(res)
+            if (res.status == 200) {
+                saveToken(res.data.token)
+                window.location = 'http://localhost:3000';
+            } else if (res.status == 203) {
+                alert("Usuário não logado")
+            }
         })
         .catch(err => {
             console.log(err)

@@ -6,12 +6,14 @@ export const getToken = () => {
     localStorage.getItem("AUTH_TOKEN")
 }
 
-export const decodeToken = () => {
-    const AUTH_TOKEN = localStorage.getItem("AUTH_TOKEN")
+export const saveToken = (token) => {
+    const decodedToken = jwtDecode(token)
 
-    if (AUTH_TOKEN) {
-        return jwtDecode(AUTH_TOKEN)
+    if (token) {
+        localStorage.setItem("token", token)
+        localStorage.setItem("userId", decodedToken.id)
+        localStorage.setItem("userType", decodedToken.type)
     } else {
-        alert("Usuário não autenticado!")
+        console.log("Token não encontrado. O usuário não está autenticado.")
     }
 }
