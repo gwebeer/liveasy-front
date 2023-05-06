@@ -1,10 +1,7 @@
-import { isDisabled } from '@testing-library/user-event/dist/utils';
 import React, { Component } from 'react';
-import { MdArrowBackIosNew } from 'react-icons/md';
 import api from '../config/api';
 import { saveToken } from '../config/Auth';
-import { Modal } from 'bootstrap';
-// import RegisterCard from '../RegisterCard.js/index.js';
+import { InvalidAlert } from '../SupportFunctions';
 
 class AuthPage extends Component {
     constructor(props) {
@@ -20,10 +17,7 @@ class AuthPage extends Component {
         }
 
         this.formData = this.formData.bind(this);
-        this.loginButton = this.loginButton.bind(this);
         this.registerButton = this.registerButton.bind(this);
-
-        this.toastTeste = this.toastTeste.bind(this);
         this.loginValidation = this.loginValidation.bind(this);
     }
 
@@ -45,14 +39,14 @@ class AuthPage extends Component {
             document.getElementById("password").classList.remove('invalid')
         }
         if (emptyField) {
-            alert("Não preenchido")
+            InvalidAlert("Login Inválido!", "Certifique-se que os campos foram preenchidos.")
             return
         }
 
         // Verifica se o email é válido
         if (this.state.form.email.indexOf('@') == -1 || this.state.form.email.indexOf('.') == -1) {
             document.getElementById("email").classList.add('invalid')
-            alert("E-mail invalido!")
+            InvalidAlert("Login Inválido!", "Insira um e-mail válido.")
             return
         }
 
@@ -61,9 +55,6 @@ class AuthPage extends Component {
             .then(res => {
                 if (res.status == 200) {
                     saveToken(res.data.token)
-                    alert(localStorage.getItem('token'))
-                    alert(localStorage.getItem('userId'))
-                    alert(localStorage.getItem('userType'))
                     window.location = 'http://localhost:3000';
                 } else if (res.status == 203) {
                     let errorDescription = res.data.msg
@@ -71,7 +62,7 @@ class AuthPage extends Component {
                     if (errorDescription == "O e-mail informado não está cadastrado.") {
                         document.getElementById("email").classList.add('invalid')
                     }
-                    alert(errorDescription)
+                    InvalidAlert("Login Inválido!", errorDescription)
                 }
             })
             .catch(err => {
@@ -81,27 +72,10 @@ class AuthPage extends Component {
 
     }
 
-
-    toastTeste(e) {
-        e.preventDefault()
-        var modalElement = document.getElementById("custom-alert")
-
-        document.getElementById('customAlert-title').textContent = "Login Inválido!"
-        document.getElementById('customAlert-description').textContent = "Certifique-se que todos os campos foram preenchidos!"
-
-        var bsModal = new Modal(modalElement)
-        bsModal.toggle()
-    }
-
     formData(e) {
         let form = this.state.form
         form[e.target.name] = e.target.value;
         this.setState({ form: form })
-    }
-    async loginButton(e) {
-        e.preventDefault()
-
-
     }
     async registerButton(e) {
         e.preventDefault()
