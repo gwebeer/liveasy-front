@@ -8,11 +8,11 @@ class RegisterPage extends Component {
         super(props);
         this.state = {
             form: {
-                name: "Guilherme Weber",
-                email: "guilherme.weber@pucpr.edu.br",
+                name: "Vittorio Perotto",
+                email: "vittorio@pucpr.edu.br",
                 birthDate: "01/12/2001",
-                phone: "(41) 99216-0347",
-                category: "Primeira Casa",
+                phone: "(41) 99999-9999",
+                category: "Organização",
                 type: "customer",
                 password: ""
             }
@@ -33,6 +33,7 @@ class RegisterPage extends Component {
         await api.post('/register/create', this.state.form)
             .then(res => {
                 alert("Usuário Cadastrado!")
+                window.location = 'http://localhost:3000/auth';
             })
             .catch(err => {
                 console.log(err)
