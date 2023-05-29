@@ -162,29 +162,13 @@ class AuthPage extends Component {
             .then(res => {
                 if (res.status == 203) {
                     InvalidAlert("Erro no Cadastro!", "O e-mail inserido já tem cadastro na LivEasy.")
+                    document.getElementById("signup-email").classList.add('invalid')
                 } else {
-                    localStorage.setItem('name', this.state.form.name)
+                    document.getElementById("signup-email").classList.remove('invalid')
+                    localStorage.setItem('name', this.state.form.name)                   
                     localStorage.setItem('email', this.state.form.email)
                     localStorage.setItem('birthDate', this.state.form.birthDate)
                     localStorage.setItem('phone', this.state.form.phone)
-                    window.location = 'http://localhost:3000/register';
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
-
-
-    async registerButton(e) {
-        e.preventDefault()
-
-        await api.get('/user/register/' + this.state.form.email)
-            .then(res => {
-                if (res.status == 203) {
-                    alert("Email já cadastrado")
-                } else {
                     window.location = 'http://localhost:3000/register';
                 }
             })
