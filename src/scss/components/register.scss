@@ -103,6 +103,10 @@
             padding-bottom: 15px;
             border-bottom: 1px #219EBC solid;
     
+            .card-selected {
+                background-color: #eae4ab;
+            }
+
             .step-card {
                 // background-color: #dadada;
                 border: 2px solid #023047;
@@ -142,6 +146,10 @@
                         color: #219EBC;
                     }
     
+                    .btn-selected {
+                        background-color: #FB8500;
+                    }
+                    
                     .card-button {
                         border: 2px solid #FB8500;
                         padding: 7px;
