@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import api from '../config/api';
-import { saveToken } from '../config/Auth';
-import { InvalidAlert } from '../SupportFunctions';
 import moment from 'moment/moment';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { InvalidAlert } from '../SupportFunctions';
+import { saveToken } from '../config/Auth';
+import api from '../config/api';
 
 class AuthPage extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class AuthPage extends Component {
         this.formData = this.formData.bind(this);
         this.btLoginClick = this.btLoginClick.bind(this);
         this.btRegisterClick = this.btRegisterClick.bind(this);
+        this.handleForgotPassword = this.handleForgotPassword.bind(this);
     }
 
     formData(e) {
@@ -177,6 +179,45 @@ class AuthPage extends Component {
             })
     }
 
+    async handleForgotPassword(e) {
+        e.preventDefault();
+
+        let emptyField = false
+        if (this.state.form.email === "") {
+            document.getElementById("signin-email").classList.add('invalid')
+            emptyField = true
+        } else {
+            document.getElementById("signin-email").classList.remove('invalid')
+        }
+        
+        // Verifica se o email é válido
+        if (this.state.form.email.indexOf('@') == -1 || this.state.form.email.indexOf('.') == -1) {
+            document.getElementById("signin-email").classList.add('invalid')
+            InvalidAlert("Login Inválido!", "Insira um e-mail válido.")
+            return
+        }
+
+        await api.get('/user/forgotPassword/' + this.state.form.email)
+        .then(res => {
+                if (res.status == 200) {
+                    // Senha enviada com sucesso
+                    // Você pode exibir uma mensagem informando ao usuário que a senha foi enviada para o e-mail fornecido
+                    document.getElementById("signup-email").classList.remove('invalid')
+                    alert("Um e-mail com as instruções para recuperar a senha foi enviado para o seu endereço de e-mail.");
+                } else if (res.status == 203) {
+                    // O e-mail informado não está cadastrado
+                    document.getElementById("signin-email").classList.add('invalid');
+                    InvalidAlert("Recuperação de Senha", "O e-mail informado não está cadastrado.");
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                // Lida com erros na solicitação, como falha na conexão com o servidor.
+                // Exiba uma mensagem de erro apropriada para o usuário.
+                InvalidAlert("Recuperação de Senha", "Ocorreu um erro ao processar a solicitação. Tente novamente mais tarde.");
+            });
+    }
+
     render() {
         if (localStorage.getItem('token')) {
             window.location = 'http://localhost:3000';
@@ -209,6 +250,8 @@ class AuthPage extends Component {
                                     name="password" value={this.state.form.password} onChange={this.formData} />
                                 <label for="floatingInput">Senha</label>
                             </div>
+
+                            <Link to="http://localhost:3000" onClick={this.handleForgotPassword}>Esqueceu a senha?</Link>
 
                             <button className='signin-bt' onClick={this.btLoginClick}> Entrar </button>
                         </form>
