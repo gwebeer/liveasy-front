@@ -55,7 +55,8 @@ class ResetPassword extends Component {
 
         
         // Autentica usuário e senha no banco de dados
-        await api.get('/user/resetPassword/' + this.state.form.email + '/' + this.state.form.password)
+        let password = {password: this.state.form.password}
+        await api.put('/user/email/' + this.state.form.email, password)
             .then(res => {
                 if (res.status === 200) {
                     saveToken(res.data.token)
