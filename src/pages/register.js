@@ -3,6 +3,9 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { InvalidAlert, RegisterEmail, SuccessAlert } from '../SupportFunctions';
 import moment from 'moment/moment';
 import api from '../config/api';
+import PrimeiraCasa from '../assets/first_home.png'
+import NovaCasa from '../assets/new_home.png'
+import JaMudou from '../assets/mudanca.png'
 
 class Register extends Component {
     constructor(props) {
@@ -224,7 +227,6 @@ class Register extends Component {
                 this.setState({ currentSection: currentSection })
                 break;
             case 4:
-                let statusUserCreate = await this.userRegiser()
                 if (!await this.userRegiser()) {
                     InvalidAlert("Erro no Cadastro!", "Ocorreu um erro inesperado! Tente novamente.")
                 }
@@ -423,7 +425,7 @@ class Register extends Component {
                         <div class="container-fluid mt-2" id="step-cards">
                             <div class="row" id="step-section">
                                 <div className="col-sm-12 col-lg-7 step-card" id="primeira-casa">
-                                    <img src="https://raw.githubusercontent.com/gwebeer/liveasy-front/img/img/logo_2.png?token=GHSAT0AAAAAACBX6G2WV3TVJILZA5KX6Q2CZCW7ZYA" className='signin-logo' />
+                                    <img src={PrimeiraCasa} className='signin-logo' />
 
                                     <div className='card-info'>
                                         <h3 className='card-title'> Primeira Casa </h3>
@@ -433,7 +435,7 @@ class Register extends Component {
                                 </div>
 
                                 <div className="col-sm-12 col-lg-7 step-card" id="nova-casa">
-                                    <img src="https://raw.githubusercontent.com/gwebeer/liveasy-front/img/img/logo_2.png?token=GHSAT0AAAAAACBX6G2WV3TVJILZA5KX6Q2CZCW7ZYA" className='signin-logo' />
+                                    <img src={NovaCasa} className='signin-logo' />
 
                                     <div className='card-info'>
                                         <h3 className='card-title'> Nova Casa </h3>
@@ -443,7 +445,7 @@ class Register extends Component {
                                 </div>
 
                                 <div className="col-sm-12 col-lg-7 step-card" id="ja-mudou">
-                                    <img src="https://raw.githubusercontent.com/gwebeer/liveasy-front/img/img/logo_2.png?token=GHSAT0AAAAAACBX6G2WV3TVJILZA5KX6Q2CZCW7ZYA" className='signin-logo' />
+                                    <img src={JaMudou} className='signin-logo' />
 
                                     <div className='card-info'>
                                         <h3 className='card-title'> Já Fiz a Mudança </h3>
