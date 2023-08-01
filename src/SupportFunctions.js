@@ -1,6 +1,8 @@
 import { Modal } from 'bootstrap';
 import api from './config/api';
+import moment from 'moment/moment';
 
+// Gera alerta de Falha
 export async function InvalidAlert(title, description) {
     var modalElement = document.getElementById("custom-alert")
 
@@ -12,6 +14,7 @@ export async function InvalidAlert(title, description) {
     bsModal.toggle()
 }
 
+// Gera alerta de Sucesso
 export async function SuccessAlert(title, description) {
     var modalElement = document.getElementById("custom-alert")
 
@@ -23,7 +26,202 @@ export async function SuccessAlert(title, description) {
     bsModal.toggle()
 }
 
+// Verifica se o e-mail está cadastrado
 export async function RegisterEmail(email) {
     let emailCadastrado = await api.get('auth/email/' + email)
     return emailCadastrado.status
+}
+
+// Valida os campos de formulário de cadastro
+export async function RegisterFieldValidation(infos) {
+
+    // Verifica se o campo de nome foi preenchido
+    if (infos.name === "") {
+        // document.getElementById("name").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "É obrigatório informar seu nome.")
+        return false
+    }
+    // Verifica se o campo de email foi preenchimento
+    if (infos.email === "") {
+        // document.getElementById("signup-email").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "É obrigatório informar seu email.")
+        return false
+    }
+    // Verifica se o campo de data de nascimento foi preenchimento
+    if (infos.birthDate === "") {
+        // document.getElementById("birthDate").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "É obrigatório informar sua data de nascimento.")
+        return false
+    }
+    // Verifica se o campo de telefone foi preenchimento
+    if (infos.phone === "") {
+        // document.getElementById("phone").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "É obrigatório informar seu telefone.")
+        return false
+    }
+
+    // Valida se o nome contém ao menos 3 caracteres
+    if (infos.name.length < 3) {
+        // document.getElementById("name").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "Este nome é muito curto.")
+        return false
+    } else {
+        // document.getElementById("name").classList.remove('invalid')
+    }
+
+    // Verifica se o email é válido
+    if (infos.email.indexOf('@') == -1 || infos.email.indexOf('.') == -1) {
+        // document.getElementById("signup-email").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "Insira um e-mail válido.")
+        return false
+    } else {
+        // document.getElementById("signup-email").classList.remove('invalid')
+    }
+
+    // Verifica se é uma data de nascimento futura
+    if (moment(infos.birthDate) > moment()) {
+        // document.getElementById("birthDate").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "Você não pode inserir uma data de nascimento futura.")
+        return false
+    } else {
+        // document.getElementById("birthDate").classList.remove('invalid')
+    }
+
+    // Verifica se usuário é maior de 16 anos
+    let minBirthDate = moment().subtract(16, 'years')
+    if (moment(infos.birthDate) > minBirthDate) {
+        // document.getElementById("birthDate").classList.add('invalid')
+        InvalidAlert("Cadastro não concluído!", "Sinto muito! Você precisa ter 16 anos para utilizar a LivEasy.")
+        return false
+    } else {
+        // document.getElementById("birthDate").classList.remove('invalid')
+    }
+
+    // Verifica se o número de telefone é válido
+    if (infos.phone.length > 11 || infos.phone.length < 10) {
+        // document.getElementById("phone").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "O formato do telefone inserido é inválido. Ex: DDD + Número.")
+        return false
+    } else {
+        // document.getElementById("phone").classList.remove('invalid')
+    }
+
+    // Verifica se o e-mail já está cadastrado
+    let emailCadastrado = await api.get('auth/email/' + infos.email)
+        .then(res => {
+            if (res.status == 203) {
+                InvalidAlert("Erro ao Cadastrar!", "O e-mail inserido já tem cadastro na LivEasy.")
+                return false
+                // document.getElementById("signup-email").classList.add('invalid')
+            } else {
+                // document.getElementById("signup-email").classList.remove('invalid')
+                return true
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+    if (!emailCadastrado) {
+        return false
+    } else {
+        return true
+    }
+}
+
+// Valida os campos de formulário de cadastro
+export async function selectStep(step) {
+    // Mantém no array apenas os passos não selecionados
+    let steps = ['primeira-casa', 'nova-casa', 'ja-mudei']
+    steps.splice(steps.indexOf(step), 1)
+
+    // Adiciona classe de formato selecionado no card selecionado
+    document.getElementById(step).classList.add('selected-step')
+
+    // Remove classe de formato selecionado dos demais cards
+    steps.forEach((element) => {
+        document.getElementById(element).classList.remove('selected-step')
+    })
+
+    // Seleciona a descrição da etapa selecionada
+    let description = ""
+    switch (step) {
+        case "primeira-casa":
+            description = "Está etapa é para você que deseja sair de casa e morar sozinho. Vamos entender e nos planejar junto para facilitar esse passo tão importante."
+            break;
+        case "nova-casa":
+            description = "Para você que precisa se mudar, mas já mora sozinho. Por aqui vamos te ajudar a se organizar para tornar a mudança mais fácil."
+            break;
+        case "ja-mudei":
+            description = "Esta etapa é pensada para você que já se mudou, mas precisa de ajuda para se organizar financeiramente e fazer a gestão de seu novo lar."
+            break;
+    }
+
+    return {
+        'step': step,
+        'description': description
+    }
+}
+
+
+// Valida se a senha atende todos os requisitos
+export async function passwordValidation(password) {
+    let numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    let specialCaracters = ["!", "@", "#", "$", "%", "&", "*", "(", ")", "[", "]", "~", ">", "<", ".", ",", ":", "/", "+", "-", "'", '"', "|", "?"]
+    let status = {
+        length: false,
+        number: false,
+        special: false
+    }
+
+    // Verifica se a senha contém no mínimo 8 caracteres
+    if (password.length >= 8) {
+        document.getElementById("length").classList.add("success")
+        document.getElementById("length-check").classList.remove("hide")
+        status.length = true
+    } else {
+        document.getElementById("length").classList.remove("success")
+        document.getElementById("length-check").classList.add("hide")
+        status.length = false
+    }
+
+    // Verifica se a senha contém um caracter numérico
+    let statusNumber = false
+    for (let i = 0; i < password.length; i++) {
+        if (numbers.includes(password[i])) {
+            statusNumber = true
+        }
+    }
+    if (statusNumber) {
+        document.getElementById("number").classList.add("success")
+        document.getElementById("number-check").classList.remove("hide")
+        status.number = true
+    } else {
+        document.getElementById("number").classList.remove("success")
+        document.getElementById("number-check").classList.add("hide")
+        status.number = false
+    }
+
+    // Verifica se a senha contém um caracter especial
+    let statusSpecial = false
+    for (let i = 0; i < password.length; i++) {
+        if (specialCaracters.includes(password[i])) {
+            statusSpecial = true
+        }
+    }
+    if (statusSpecial) {
+        document.getElementById("special").classList.add("success")
+        document.getElementById("special-check").classList.remove("hide")
+        status.special = true
+    } else {
+        document.getElementById("special").classList.remove("success")
+        document.getElementById("special-check").classList.add("hide")
+        status.special = false
+    }
+
+    if (status.length && status.number && status.special) {
+        return true
+    } else {
+        return false
+    }
 }

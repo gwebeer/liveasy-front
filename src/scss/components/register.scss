@@ -1,212 +1,686 @@
 .register-page {
+    background: radial-gradient(ellipse at center, rgb(230, 229, 211) 0%, rgb(247, 245, 216) 35%, #9bdde0 100%);
     width: 100%;
-    height: 100vh;
-    background: rgb(219, 219, 219);
-    background: linear-gradient(0deg, rgba(219, 219, 219, 1) 0%, rgba(235, 235, 235, 1) 100%);
+    min-height: 100vh;
     font-family: 'Comfortaa', cursive;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
 
-    header {
-        background-color: #023047;
-        height: 15%;
-        border-radius: 0 0 15px 15px;
+    .logo-section {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        margin-top: 15px;
+        // border: 1px solid black;
 
         img {
-            height: 80%;
-            margin: 0 50px;
-
-            @include res-sm {
-                margin: 0 10px;
-                height: 50%;
-            }
+            height: 80px;
         }
 
-        .title-page {
-            // margin-left: 50px;
-            color: aliceblue;
+        label {
+            color: #023047;
+            font-size: 30px;
+            font-weight: 800;
+            justify-content: center;
             display: flex;
-            flex-direction: column;
-
-            h1 {
-                font-size: 30px;
-                font-weight: 800;
-
-                @include res-sm {
-                    font-size: 24px;
-                }
-            }
-
-            h2 {
-                font-size: 17px;
-                font-weight: 100;
-                color: #219EBC;
-
-                @include res-sm {
-                    font-size: 15px;
-                }
-            }
+            transition: .5s ease-in-out;
+            transition-delay: .4s;
+            margin-top: 27px;
+            margin-left: 15px;
+            letter-spacing: 5px;
         }
     }
-    
-    .page-content {
-        overflow: auto;
-        height: 85%;
-    
-        .section-title {
+
+    .title-section {
+        // border: 1px solid black;
+        border-top: 1px solid rgb(188, 188, 188);
+        margin-top: 10px;
+        padding-top: 10px;
+        text-align: center;
+
+        h1 {
+            color: #023047;
+            font-size: 23px;
+            font-weight: 500;
+            justify-content: center;
             display: flex;
-            flex-direction: column;
-    
-            .title {
-                display: flex;
-                flex-direction: row;
-    
-                h1 {
-                    font-size: 28px;
-                    font-weight: 800;
-    
-                    @include res-sm {
-                        font-size: 22px;
-                    }
-                }
-            }
-    
-            i {
-                font-size: 22px;
-                margin: 2px 10px;
-    
-                @include res-sm {
-                    font-size: 19px;
-                    margin: 0 10px;
-                }
-            }
-    
-            .subtitle {
-                font-size: 15px;
-            }
-        }
-    
-        .personal-information {
-            margin: 20px 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px #219EBC solid;
-
-            .infos {
-                // display: none;
-            }
-        }
-    
-        .move-step {
-            margin: 20px 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px #219EBC solid;
-    
-            .card-selected {
-                background-color: #eae4ab;
-            }
-
-            .step-card {
-                // background-color: #dadada;
-                border: 2px solid #023047;
-                border-radius: 5px;
-                margin: 15px 30px;
-                height: 150px;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                transition: .3s ease-in-out;
-    
-                &:hover {
-                    box-shadow: 2px 5px 10px #868686;
-                }
-
-                @include res-sm {
-                    margin: 15px 0;
-                    height: 200px;
-                }
-    
-                img {
-                    height: 80%;
-                }
-    
-                .card-info {
-                    margin-left: 25px;
-    
-                    .card-title {
-                        font-size: 25px;
-                        font-weight: 800;
-                        color: #023047;
-                    }
-    
-                    .card-subtitle {
-                        margin-top: 7px;
-                        font-size: 14px;
-                        color: #219EBC;
-                    }
-    
-                    .btn-selected {
-                        background-color: #FB8500;
-                    }
-                    
-                    .card-button {
-                        border: 2px solid #FB8500;
-                        padding: 7px;
-                        border-radius: 3px;
-                        margin-top: 10px;
-                        transition: .3s ease-in-out;
-                        font-weight: 600;
-                        color: #023047;
-    
-                        &:hover {
-                            background-color: #FB8500;
-                        }
-                    }
-                }
-            }
+            letter-spacing: 0px;
         }
 
-        .password {
-            margin: 20px 30px;
-            padding-bottom: 15px;
-            // border-bottom: 1px #219EBC solid;
-
-            .infos {
-
-                .requirement-title {
-                    font-weight: 800;
-                    color: #219EBC;
-                }
-                .password-requirement {
-                    font-weight: 100;
-                    color: #868686;
-                    margin-top: 4px;
-
-                    i {
-                        color: rgb(45, 161, 45);
-                    }
-                }
-            }
+        h2 {
+            color: #5c8fb1;
+            font-size: 15px;
+            justify-content: center;
+            display: flex;
+            letter-spacing: 0px;
         }
+    }
 
-        .btn-section {
+    // Seção de informações pessoais
+    .personal-information {
+        width: 33%;
+        max-width: 500px;
+        height: 410px;
+        margin: 10px;
+        background-color: #f7f7f7;
+        border-radius: 15px;
+        box-shadow: 5px 10px 20px #b7b6b6;
+        padding-top: 20px;
+        padding-bottom: 10px;
+        transition: .5s ease-in-out;
+        overflow: hidden;
+
+        .section-title {
             display: flex;
             flex-direction: row;
             justify-content: center;
-            margin-bottom: 30px;
 
-            button {
-                border: 1px solid black;
-                padding: 10px;
-                width: 130px;
-                margin: 0 15px;
-                border-radius: 7px;
+            i {
+                margin-left: 7px;
+            }
+        }
+
+        h3 {
+            color: #023047;
+            font-size: 18px;
+            font-weight: 800;
+            justify-content: center;
+            display: flex;
+            letter-spacing: 0px;
+        }
+
+        h4 {
+            color: #5c8fb1;
+            font-size: 13px;
+            font-weight: 800;
+            justify-content: center;
+            display: flex;
+            letter-spacing: 0px;
+            text-align: center;
+        }
+
+        .personal-information-form {
+            width: 100%;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: .5s ease-in-out;
+
+            .form-floating {
+                width: 85%;
+                margin: 3px 0;
+                font-size: 13px;
+                padding-bottom: 1.5px;
+
+                input {
+                    font-size: 15px;
+                    background-color: #f4fbff;
+                }
+
+                @include res-lg {
+                    margin: 10px 0;
+                }
+
+                @include res-sm {
+                    margin: 5px 0;
+                    width: 85%;
+                }
+            }
+
+            .signup-bt {
+                width: 30%;
+                height: 35px;
+                justify-content: center;
+                display: block;
+                color: #023047;
+                background-color: #219EBC;
+                font-size: 15px;
+                font-weight: bold;
+                outline: none;
+                border-radius: 10px;
+                transition: .2s ease-in;
+                cursor: pointer;
+                margin-top: 15px;
+                margin-bottom: 10px;
+
+                &:hover {
+                    background-color: #FB8500;
+                }
+
+                @include res-lg {
+                    margin-top: 45px;
+                }
+
+                @include res-sm {
+                    margin-top: 25px;
+                }
             }
         }
     }
 
-    
-    
+    // Seção para selecionar etapa de mudança
+    .move-step {
+        width: 33%;
+        max-width: 500px;
+        height: 390px;
+        margin: 10px;
+        background-color: #f7f7f7;
+        border-radius: 15px;
+        box-shadow: 5px 10px 20px #b7b6b6;
+        padding: 12px;
+        padding-top: 20px;
+        top: 280px;
+        transition-delay: .5s;
+        margin-left: 10000px;
+        overflow: hidden;
+        position: absolute;
+        transition: .5s ease-in-out;
 
+        .section-title {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            i {
+                margin-left: 7px;
+            }
+        }
+
+        h3 {
+            color: #023047;
+            font-size: 18px;
+            font-weight: 800;
+            justify-content: center;
+            display: flex;
+            letter-spacing: 0px;
+        }
+
+        h4 {
+            color: #5c8fb1;
+            font-size: 13px;
+            font-weight: 800;
+            justify-content: center;
+            display: flex;
+            letter-spacing: 0px;
+            text-align: center;
+        }
+
+        .step-cards {
+            // display: none;
+
+            .col {
+                padding: 0;
+                overflow: hidden;
+                margin: 10px;
+                border-radius: 10px;
+                border: 1px solid #023047;
+                height: 140px;
+                background-color: #ededed;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: .3s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #b8b8b8;
+                }
+
+                img {
+                    height: 100px;
+                }
+
+                span {
+                    font-size: 15px;
+                    font-weight: 500;
+                    margin-top: 5px;
+                }
+            }
+
+            .selected-step {
+                background-color: #219EBC;
+
+                &:hover {
+                    background-color: #219EBC;
+                }
+            }
+
+            .step-description {
+                margin-top: 7px;
+                color: #355164;
+                font-size: 16px;
+                font-weight: 300;
+                justify-content: center;
+                display: flex;
+                letter-spacing: 0px;
+                text-align: justify;
+                line-height: 25px;
+            }
+
+            .action-buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+
+                .action-bt {
+                    width: 30%;
+                    height: 35px;
+                    justify-content: center;
+                    display: block;
+                    color: #023047;
+                    background-color: #219EBC;
+                    font-size: 15px;
+                    font-weight: bold;
+                    outline: none;
+                    border-radius: 10px;
+                    transition: .2s ease-in;
+                    cursor: pointer;
+                    margin: 20px 5px 5px 10px;
+
+                    &:hover {
+                        background-color: #FB8500;
+                    }
+
+                    @include res-lg {
+                        margin-top: 45px;
+                    }
+
+                    @include res-sm {
+                        margin-top: 25px;
+                    }
+                }
+            }
+        }
+    }
+
+    // Seção para criar uma senha
+    .password-section {
+        width: 33%;
+        max-width: 500px;
+        margin: 10px;
+        height: 300px;
+        margin-bottom: 20px;
+        background-color: #f7f7f7;
+        border-radius: 15px;
+        box-shadow: 5px 10px 20px #b7b6b6;
+        padding: 12px;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        top: 385px;
+        transition-delay: .5s;
+        margin-left: 10000px;
+        overflow: hidden;
+        position: absolute;
+        transition: .5s ease-in-out;
+
+        .section-title {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            i {
+                margin-left: 7px;
+            }
+        }
+
+        h3 {
+            color: #023047;
+            font-size: 18px;
+            font-weight: 800;
+            justify-content: center;
+            display: flex;
+            letter-spacing: 0px;
+        }
+
+        h4 {
+            color: #5c8fb1;
+            font-size: 13px;
+            font-weight: 800;
+            justify-content: center;
+            display: flex;
+            letter-spacing: 0px;
+            text-align: center;
+        }
+
+        .form-floating {
+            width: 80%;
+            margin: 3px 0;
+            font-size: 13px;
+            padding-bottom: 1.5px;
+            margin-top: 7px;
+
+            input {
+                font-size: 15px;
+                background-color: #f4fbff;
+            }
+
+            label {
+                padding-top: 20px;
+            }
+
+            @include res-lg {
+                margin: 10px 0;
+            }
+
+            @include res-sm {
+                margin: 5px 0;
+                width: 85%;
+            }
+        }
+
+        .requirement-title {
+            font-weight: 800;
+            font-size: 15px;
+            color: #219EBC;
+            margin-top: 7px;
+        }
+
+        .password-requirement {
+            font-weight: 100;
+            color: #868686;
+            margin-top: 7px;
+            font-size: 12px;
+
+            i {
+                color: rgb(45, 161, 45);
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+
+            .action-bt {
+                width: 30%;
+                height: 35px;
+                justify-content: center;
+                display: block;
+                color: #023047;
+                background-color: #219EBC;
+                font-size: 15px;
+                font-weight: bold;
+                outline: none;
+                border-radius: 10px;
+                transition: .2s ease-in;
+                cursor: pointer;
+                margin: 20px 5px 5px 10px;
+
+                &:hover {
+                    background-color: #FB8500;
+                }
+
+                @include res-lg {
+                    margin-top: 45px;
+                }
+
+                @include res-sm {
+                    margin-top: 25px;
+                }
+            }
+        }
+    }
+
+    #loading-user-create {
+        position: absolute;
+        top: 510px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10000px;
+        transition: .5s ease-in;
+
+        h4 {
+            font-size: 23px;
+            font-weight: 800;
+            color: #023047;
+        }
+        label {
+            font-size: 13px;
+            color: #355164;
+        }
+
+        #loading-bar {
+            margin-top: 15px;
+            width: 0px;
+            height: 10px;
+            background-color: #FB8500;
+            border-radius: 100px;
+            transition: width 5s ease;
+            transition-delay: 1s;
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// .register-page {
+//     width: 100%;
+//     height: 100vh;
+//     background: rgb(219, 219, 219);
+//     background: linear-gradient(0deg, rgba(219, 219, 219, 1) 0%, rgba(235, 235, 235, 1) 100%);
+//     font-family: 'Comfortaa', cursive;
+//     overflow: hidden;
+
+//     header {
+//         background-color: #023047;
+//         height: 15%;
+//         border-radius: 0 0 15px 15px;
+//         display: flex;
+//         flex-direction: row;
+//         align-items: center;
+
+//         img {
+//             height: 80%;
+//             margin: 0 50px;
+
+//             @include res-sm {
+//                 margin: 0 10px;
+//                 height: 50%;
+//             }
+//         }
+
+//         .title-page {
+//             // margin-left: 50px;
+//             color: aliceblue;
+//             display: flex;
+//             flex-direction: column;
+
+//             h1 {
+//                 font-size: 30px;
+//                 font-weight: 800;
+
+//                 @include res-sm {
+//                     font-size: 24px;
+//                 }
+//             }
+
+//             h2 {
+//                 font-size: 17px;
+//                 font-weight: 100;
+//                 color: #219EBC;
+
+//                 @include res-sm {
+//                     font-size: 15px;
+//                 }
+//             }
+//         }
+//     }
+
+//     .page-content {
+//         overflow: auto;
+//         height: 85%;
+
+//         .section-title {
+//             display: flex;
+//             flex-direction: column;
+
+//             .title {
+//                 display: flex;
+//                 flex-direction: row;
+
+//                 h1 {
+//                     font-size: 28px;
+//                     font-weight: 800;
+
+//                     @include res-sm {
+//                         font-size: 22px;
+//                     }
+//                 }
+//             }
+
+//             i {
+//                 font-size: 22px;
+//                 margin: 2px 10px;
+
+//                 @include res-sm {
+//                     font-size: 19px;
+//                     margin: 0 10px;
+//                 }
+//             }
+
+//             .subtitle {
+//                 font-size: 15px;
+//             }
+//         }
+
+//         .personal-information {
+//             margin: 20px 30px;
+//             padding-bottom: 15px;
+//             border-bottom: 1px #219EBC solid;
+
+//             .infos {
+//                 // display: none;
+//             }
+//         }
+
+//         .move-step {
+//             margin: 20px 30px;
+//             padding-bottom: 15px;
+//             border-bottom: 1px #219EBC solid;
+
+//             .card-selected {
+//                 background-color: #eae4ab;
+//             }
+
+//             .step-card {
+//                 // background-color: #dadada;
+//                 border: 2px solid #023047;
+//                 border-radius: 5px;
+//                 margin: 15px 30px;
+//                 height: 150px;
+//                 display: flex;
+//                 flex-direction: row;
+//                 align-items: center;
+//                 transition: .3s ease-in-out;
+
+//                 &:hover {
+//                     box-shadow: 2px 5px 10px #868686;
+//                 }
+
+//                 @include res-sm {
+//                     margin: 15px 0;
+//                     height: 200px;
+//                 }
+
+//                 img {
+//                     height: 80%;
+//                 }
+
+//                 .card-info {
+//                     margin-left: 25px;
+
+//                     .card-title {
+//                         font-size: 25px;
+//                         font-weight: 800;
+//                         color: #023047;
+//                     }
+
+//                     .card-subtitle {
+//                         margin-top: 7px;
+//                         font-size: 14px;
+//                         color: #219EBC;
+//                     }
+
+//                     .btn-selected {
+//                         background-color: #FB8500;
+//                     }
+
+//                     .card-button {
+//                         border: 2px solid #FB8500;
+//                         padding: 7px;
+//                         border-radius: 3px;
+//                         margin-top: 10px;
+//                         transition: .3s ease-in-out;
+//                         font-weight: 600;
+//                         color: #023047;
+
+//                         &:hover {
+//                             background-color: #FB8500;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+//         .password {
+//             margin: 20px 30px;
+//             padding-bottom: 15px;
+//             // border-bottom: 1px #219EBC solid;
+
+//             .infos {
+
+//                 .requirement-title {
+//                     font-weight: 800;
+//                     color: #219EBC;
+//                 }
+//                 .password-requirement {
+//                     font-weight: 100;
+//                     color: #868686;
+//                     margin-top: 4px;
+
+//                     i {
+//                         color: rgb(45, 161, 45);
+//                     }
+//                 }
+//             }
+//         }
+
+//         .btn-section {
+//             display: flex;
+//             flex-direction: row;
+//             justify-content: center;
+//             margin-bottom: 30px;
+
+//             button {
+//                 border: 1px solid black;
+//                 padding: 10px;
+//                 width: 130px;
+//                 margin: 0 15px;
+//                 border-radius: 7px;
+//             }
+//         }
+//     }
+
+
+
+
+// }
