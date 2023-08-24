@@ -174,7 +174,7 @@ class Register extends Component {
         // Exibe mensagem de sucesso
         await new Promise(r => setTimeout(r, 5000));
         this.setState({ creationStatus: "Usuário criado com sucesso!", creationDescription: "Você será direcionado para a página de login." })
-        
+
         // Remove as informações do localstorage
         localStorage.clear()
 
@@ -239,13 +239,31 @@ class Register extends Component {
 
                 <div className='move-step' id='move-step'>
                     <span className='section-title' id='move-step-title'>
-                        <h3> Etapa de Mudança </h3>
+                        <h3> Queremos te conhecer melhor </h3>
                         <i className='hide' id="move-step-check"> <FaCheckCircle /> </i>
                     </span>
-                    <h4> Selecione a etapa de mudança que deseja começar </h4>
+                    <h4> Para te ajudar com todo o planejamento </h4>
 
                     <div className="container step-cards">
-                        <div className="row align-items-center">
+                        <div class="form-floating data-input">
+                            <input type="number" className="form-control" id="phone" placeholder="name@example.com"
+                                name="phone" value={this.state.form.phone} onChange={this.formData} />
+                            <label for="floatingInput">Renda Mensal</label>
+                        </div>
+
+                        <span className='step-description'> Você possui dinheiro guardado que vá destinar a mudança? </span>
+                        <div className='action-buttons'>
+                            <button className='action-bt' onClick={this.moveStepBackClick}> Sim </button>
+                            <button className='action-bt' onClick={this.moveStepNextClick}> Não </button>
+                        </div>
+
+                        <div class="form-floating data-input">
+                            <input type="number" className="form-control" id="phone" placeholder="name@example.com"
+                                name="phone" value={this.state.form.phone} onChange={this.formData} />
+                            <label for="floatingInput">Orçamento Especial</label>
+                        </div>
+
+                        {/* <div className="row align-items-center">
                             <div className="primeira-casa col" id="primeira-casa" onClick={this.stepSelector}>
                                 <img className="primeira-casa" src={PrimeiraCasa} />
                                 <span className="primeira-casa"> Primeira Casa </span>
@@ -260,9 +278,9 @@ class Register extends Component {
                                 <img src={JaMudou} className="ja-mudei" />
                                 <label className="ja-mudei"> Já me Mudei </label>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <span className='step-description'> {this.state.stepDescription} </span>
+                        {/* <span className='step-description'> {this.state.stepDescription} </span> */}
                         <div className='action-buttons'>
                             <button className='action-bt' onClick={this.moveStepBackClick}> Voltar </button>
                             <button className='action-bt' onClick={this.moveStepNextClick}> Próximo </button>
