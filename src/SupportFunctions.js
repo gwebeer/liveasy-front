@@ -225,3 +225,34 @@ export async function passwordValidation(password) {
         return false
     }
 }
+
+// Valida os campos de formulário de cadastro
+export async function movingInformation(info) {
+    // Verifica se o campo de renda mensal foi preenchido
+    if (info.income === "") {
+        InvalidAlert("Campo Inválido!", "O campo de renda mensal está em branco.")
+        return false
+    }
+    // Verifica se o botão de orçamento especial foi selecionado
+    if (info.movingBudget === "") {
+        InvalidAlert("Campo Inválido!", "É necessário informar se você tem um orçamento especial para mudança.")
+        return false
+    }
+    // Verifica se o campo de data da mudança foi preenchido
+    if (info.movingDate === "") {
+        InvalidAlert("Campo Inválido!", "Você não informou uma data de previsão para mudança.")
+        return false
+    }
+    // Se tiver orçamento especial, verifica se foi informado um valor
+    if (info.movingBudget === true && info.movingBudgetValue === "") {
+        InvalidAlert("Campo Inválido!", "Você não informou seu orçamento de mudança.")
+        return false
+    }
+    // Verifica se é uma data de nascimento futura
+    if (moment(info.movingDate) < moment()) {
+        // document.getElementById("birthDate").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "Você não pode inserir uma data de mudança no passado.")
+        return false
+    }
+    return true
+}
