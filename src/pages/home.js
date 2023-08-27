@@ -15,6 +15,13 @@ class Home extends Component {
         this.state = {
 
         }
+
+        this.sair = this.sair.bind(this);
+    }
+
+    sair() {
+        localStorage.clear()
+        window.location = "http://localhost:3000/auth"
     }
 
     render() {
@@ -66,7 +73,7 @@ class Home extends Component {
                             Minha Conta
                         </li>
 
-                        <li className='option'>
+                        <li className='option' onClick={this.sair}>
                             <i> <TbDoorExit/> </i> 
                             Deslogar
                         </li>
