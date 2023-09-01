@@ -107,19 +107,20 @@ export async function RegisterFieldValidation(infos) {
     }
 
     // Verifica se o e-mail já está cadastrado
-    let emailCadastrado = await api.get('auth/email/' + infos.email)
+    let emailCadastrado = await api.post('user/validate-email', { email: infos.email })
         .then(res => {
-            if (res.status == 203) {
-                InvalidAlert("Erro ao Cadastrar!", "O e-mail inserido já tem cadastro na LivEasy.")
+            if (res.status == 200) {
+                InvalidAlert("Erro no Cadastro!", res.data.msg)
+                document.getElementById("signup-email").classList.add('invalid')
                 return false
-                // document.getElementById("signup-email").classList.add('invalid')
-            } else {
-                // document.getElementById("signup-email").classList.remove('invalid')
-                return true
             }
         })
         .catch(err => {
-            console.log(err)
+            if (err.response.status == 404) {
+                return true
+            } else {
+                InvalidAlert("Erro no Cadastro!", "Ocorreu um erro desconhecido!")
+            }
         })
 
     if (!emailCadastrado) {
@@ -224,4 +225,35 @@ export async function passwordValidation(password) {
     } else {
         return false
     }
+}
+
+// Valida os campos de formulário de cadastro
+export async function movingInformation(info) {
+    // Verifica se o campo de renda mensal foi preenchido
+    if (info.income === "") {
+        InvalidAlert("Campo Inválido!", "O campo de renda mensal está em branco.")
+        return false
+    }
+    // Verifica se o botão de orçamento especial foi selecionado
+    if (info.movingBudget === "") {
+        InvalidAlert("Campo Inválido!", "É necessário informar se você tem um orçamento especial para mudança.")
+        return false
+    }
+    // Verifica se o campo de data da mudança foi preenchido
+    if (info.movingDate === "") {
+        InvalidAlert("Campo Inválido!", "Você não informou uma data de previsão para mudança.")
+        return false
+    }
+    // Se tiver orçamento especial, verifica se foi informado um valor
+    if (info.movingBudget === true && info.movingBudgetValue === "") {
+        InvalidAlert("Campo Inválido!", "Você não informou seu orçamento de mudança.")
+        return false
+    }
+    // Verifica se é uma data de nascimento futura
+    if (moment(info.movingDate) < moment()) {
+        // document.getElementById("birthDate").classList.add('invalid')
+        InvalidAlert("Campo Inválido!", "Você não pode inserir uma data de mudança no passado.")
+        return false
+    }
+    return true
 }

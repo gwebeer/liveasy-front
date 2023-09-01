@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
-import { InvalidAlert, RegisterEmail, RegisterFieldValidation, SuccessAlert, passwordValidation, selectStep } from '../SupportFunctions';
+import { InvalidAlert, RegisterFieldValidation, passwordValidation, movingInformation } from '../SupportFunctions';
 import moment from 'moment/moment';
 import api from '../config/api';
 import PrimeiraCasa from '../assets/first_home.png'
@@ -16,19 +16,23 @@ class Register extends Component {
                 email: localStorage.getItem("email"),
                 birthDate: localStorage.getItem("birthDate"),
                 phone: localStorage.getItem("phone"),
+                income: "",
+                movingBudget: "",
+                movingDate: "",
                 password: "",
+
             },
-            selectedStep: "",
-            stepDescription: "Selecione umas das etapas acima para ver mais detalhes sobre ela.",
+            movingBudget: "",
             creationStatus: "Estamos criando seu usuário...",
             creationDescription: ""
         }
 
         this.formData = this.formData.bind(this);
         this.personalInfoBtClick = this.personalInfoBtClick.bind(this);
-        this.stepSelector = this.stepSelector.bind(this);
-        this.moveStepNextClick = this.moveStepNextClick.bind(this);
-        this.moveStepBackClick = this.moveStepBackClick.bind(this);
+        this.movingBudgetShow = this.movingBudgetShow.bind(this);
+        this.movingBudgetHide = this.movingBudgetHide.bind(this);
+        this.moveInformationNextClick = this.moveInformationNextClick.bind(this);
+        this.moveInformationBackClick = this.moveInformationBackClick.bind(this);
         this.passwordBackClick = this.passwordBackClick.bind(this);
         this.passwordNextClick = this.passwordNextClick.bind(this);
         this.userRegiser = this.userRegiser.bind(this);
@@ -62,42 +66,61 @@ class Register extends Component {
             // Definir cor verde para o título do box de informações pessoais
             document.getElementById("personal-information-title").classList.add('success')
             // Mostrar box de etapa de mudança
-            document.getElementById("move-step").style.marginLeft = "10px"
+            document.getElementById("move-information").style.marginLeft = "10px"
         }
     }
 
-    // Função para definir qual a etapa de mudança que foi selecionada
-    async stepSelector(e) {
-        // Busca o nome da etapa selecionada
-        let elementName = e.target.classList[0]
+    // Botão que ativa o orçamento especial
+    async movingBudgetShow() {
+        // Deixa botão com classe selecionada
+        document.getElementById("budgetShow").classList.add("bt-select")
+        document.getElementById("budgetHide").classList.remove("bt-select")
+        // Aumenta o box de informações da mudança
+        document.getElementById("move-information").style.height = '450px'
+        // Deixa o campo de orçamento visível
+        document.getElementById("movingBudgetInput").classList.remove('hide')
+        // Informa status do botão selecionado
+        this.setState({ movingBudget: true })
+    }
 
-        // Envoca a função de seleção da etapa
-        let functionSelected = await selectStep(elementName)
-
-        // Atualiza o state com etapa selecionada e sua descrição
-        this.setState({ selectedStep: functionSelected.step, stepDescription: functionSelected.description })
+    // Botão que desativa o orçamento especial
+    async movingBudgetHide() {
+        // Tira classe selecionada do botão
+        document.getElementById("budgetHide").classList.add("bt-select")
+        document.getElementById("budgetShow").classList.remove("bt-select")
+        // Aumenta o box de informações da mudança
+        document.getElementById("move-information").style.height = '380px'
+        // Diminuir a altura do Box de etapa da mudança
+        document.getElementById("movingBudgetInput").classList.add('hide')
+        // Informa status do botão selecionado
+        this.setState({ movingBudget: false })
     }
 
     // Botão de próximo da seção de seleção da etapa de mudança
-    async moveStepNextClick() {
-        // Valida se foi selecionado alguma etapa de mudança
-        if (this.state.selectedStep === "") {
-            InvalidAlert("Seleção Inválida!", "Você precisa selecionar uma etapa para continuar.")
+    async moveInformationNextClick() {
+        let moveInfo = {
+            income: this.state.form.income,
+            movingBudget: this.state.movingBudget,
+            movingBudgetValue: this.state.form.movingBudget,
+            movingDate: this.state.form.movingDate
+        }
+        // Valida se os campos foram preenchidos
+        if(!await movingInformation(moveInfo)) {
             return
         }
 
         // Diminuir a altura do Box de etapa da mudança
-        document.getElementById("move-step").style.height = '80px'
+        document.getElementById("move-information").style.height = '80px'
         // Mostrar símbolo de concluído no título da etapa de mudança
-        document.getElementById("move-step-check").classList.remove('hide')
+        document.getElementById("move-information-check").classList.remove('hide')
         // Definir cor verde para o título do box de etapa de mudança
-        document.getElementById("move-step-title").classList.add('success')
+        document.getElementById("move-information-title").classList.add('success')
         // Mostrar box de criação de senha
         document.getElementById("password-section").style.marginLeft = "10px"
     }
 
     // Botão de voltar da seção de seleção da etapa de mudança
-    async moveStepBackClick() {
+    async moveInformationBackClick() {
         // Aumentar a altura do Box de informçaões pessoais
         document.getElementById("personal-information").style.height = '410px'
         // Ocultar símbolo de concluído no título de informações pessoais
@@ -105,17 +128,21 @@ class Register extends Component {
         // Definir cor padrão para o título do box de informações pessoais
         document.getElementById("personal-information-title").classList.remove('success')
         // Ocultar box de etapa de mudança
-        document.getElementById("move-step").style.marginLeft = "10000px"
+        document.getElementById("move-information").style.marginLeft = "10000px"
     }
 
     // Botão de voltar da seção de criação de senha
     async passwordBackClick() {
         // Aumentar a altura do Box de etapa da mudança
-        document.getElementById("move-step").style.height = '390px'
+        if (this.state.movingBudget) {
+            document.getElementById("move-information").style.height = '450px'
+        } else {
+            document.getElementById("move-information").style.height = '380px'
+        }        
         // Ocultar símbolo de concluído no título da etapa de mudança
-        document.getElementById("move-step-check").classList.add('hide')
+        document.getElementById("move-information-check").classList.add('hide')
         // Definir cor padrão para o título do box de etapa de mudança
-        document.getElementById("move-step-title").classList.remove('success')
+        document.getElementById("move-information-title").classList.remove('success')
         // Ocultar box de definição de senha
         document.getElementById("password-section").style.marginLeft = "10000px"
     }
@@ -156,25 +183,27 @@ class Register extends Component {
             type: "customer",
             phone: this.state.form.phone,
         }
-        console.log(userInfo)
 
         // Registra usuário no banco de dados
-        let userRegister = (await api.post('/register/create', userInfo))
+        let userRegister = (await api.post('/user/register', userInfo))
 
         // Monta dicionário com informações para criação de um processo
         let processInfo = {
-            user: userRegister.data.userPost._id,
-            step: this.state.selectedStep,
-            status: "nao-iniciado",
+            user: userRegister.data._id,
+            status: "first_access",
+            income: this.state.form.income,
+            budget: this.state.form.movingBudget,
+            movingDate: this.state.form.movingDate
         }
-
+        
         // Registra processo no banco de dados
-        let processRegister = (await api.post('/process/create', processInfo))
+        let processRegister = (await api.post('/user/process/create', processInfo))
+        console.log(processRegister)
 
         // Exibe mensagem de sucesso
         await new Promise(r => setTimeout(r, 5000));
         this.setState({ creationStatus: "Usuário criado com sucesso!", creationDescription: "Você será direcionado para a página de login." })
-        
+
         // Remove as informações do localstorage
         localStorage.clear()
 
@@ -237,35 +266,41 @@ class Register extends Component {
                     </form>
                 </div>
 
-                <div className='move-step' id='move-step'>
-                    <span className='section-title' id='move-step-title'>
-                        <h3> Etapa de Mudança </h3>
-                        <i className='hide' id="move-step-check"> <FaCheckCircle /> </i>
+                <div className='move-information' id='move-information'>
+                    <span className='section-title' id='move-information-title'>
+                        <h3> Queremos te conhecer melhor </h3>
+                        <i className='hide' id="move-information-check"> <FaCheckCircle /> </i>
                     </span>
-                    <h4> Selecione a etapa de mudança que deseja começar </h4>
+                    <h4> Para te ajudar com todo o planejamento </h4>
 
-                    <div className="container step-cards">
-                        <div className="row align-items-center">
-                            <div className="primeira-casa col" id="primeira-casa" onClick={this.stepSelector}>
-                                <img className="primeira-casa" src={PrimeiraCasa} />
-                                <span className="primeira-casa"> Primeira Casa </span>
-                            </div>
-
-                            <div className="nova-casa col" id="nova-casa" onClick={this.stepSelector}>
-                                <img src={NovaCasa} className="nova-casa" />
-                                <label className="nova-casa"> Nova Casa </label>
-                            </div>
-
-                            <div className="ja-mudei col" id="ja-mudei" onClick={this.stepSelector}>
-                                <img src={JaMudou} className="ja-mudei" />
-                                <label className="ja-mudei"> Já me Mudei </label>
-                            </div>
+                    <div className='content-section'>
+                        <div class="form-floating data-input">
+                            <input type="number" className="form-control" id="income" placeholder="R$ 1000,00"
+                                name="income" value={this.state.form.income} onChange={this.formData} />
+                            <label for="floatingInput"> Qual sua renda mensal? </label>
                         </div>
 
-                        <span className='step-description'> {this.state.stepDescription} </span>
+                        <span> Você possui dinheiro guardado que vá destinar a mudança? </span>
+                        <div className='budget-buttons'>
+                            <button id='budgetShow' onClick={this.movingBudgetShow}> Sim </button>
+                            <button id='budgetHide' onClick={this.movingBudgetHide}> Não </button>
+                        </div>
+
+                        <div class="form-floating data-input hide" id="movingBudgetInput">
+                            <input type="number" className="form-control" id="movingBudget" placeholder="R$ 1000,00"
+                                name="movingBudget" value={this.state.form.movingBudget} onChange={this.formData} />
+                            <label for="floatingInput"> Quanto vai destinar? </label>
+                        </div>
+
+                        <div class="form-floating data-input">
+                            <input type="date" className="form-control" id="movingDate" placeholder="dd/mm/yyyy"
+                                name="movingDate" value={this.state.form.movingDate} onChange={this.formData} />
+                            <label for="floatingInput">Data Prevista de Mudança</label>
+                        </div>
+
                         <div className='action-buttons'>
-                            <button className='action-bt' onClick={this.moveStepBackClick}> Voltar </button>
-                            <button className='action-bt' onClick={this.moveStepNextClick}> Próximo </button>
+                            <button className='action-bt' onClick={this.moveInformationBackClick}> Voltar </button>
+                            <button className='action-bt' onClick={this.moveInformationNextClick}> Próximo </button>
                         </div>
                     </div>
                 </div>

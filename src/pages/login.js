@@ -59,25 +59,28 @@ class AuthPage extends Component {
         }
 
         // Autentica usuário e senha no banco de dados
-        await api.get('/user/auth/' + this.state.form.email + '/' + this.state.form.password)
+        let userInfo = {
+            email: this.state.form.email,
+            password: this.state.form.password
+        }
+
+        await api.post('/user/auth', userInfo)
             .then(res => {
+                console.log(res)
                 if (res.status == 200) {
                     saveToken(res.data.token)
                     window.location = 'http://localhost:3000';
-                } else if (res.status == 203) {
-                    let errorDescription = res.data.msg
-
-                    if (errorDescription == "O e-mail informado não está cadastrado.") {
-                        document.getElementById("signin-email").classList.add('invalid')
-                    }
-                    InvalidAlert("Login Inválido!", errorDescription)
                 }
             })
             .catch(err => {
-                console.log(err)
+                if (err.response.status == 401) {
+                    InvalidAlert("Login Inválido!", err.response.data.msg)                    
+                } else if (err.response.status == 404) {
+                    InvalidAlert("Login Inválido!", err.response.data.msg)                    
+                } else {
+                    console.log(err)
+                }
             })
-
-
     }
 
     async btRegisterClick(e) {
@@ -160,22 +163,25 @@ class AuthPage extends Component {
             document.getElementById("phone").classList.remove('invalid')
         }
 
-        await api.get('auth/email/' + this.state.form.email)
+        let userEmail = {email: this.state.form.email}
+        await api.post('/user/validate-email', userEmail)
             .then(res => {
-                if (res.status == 203) {
-                    InvalidAlert("Erro no Cadastro!", "O e-mail inserido já tem cadastro na LivEasy.")
+                if (res.status == 200) {
+                    InvalidAlert("Erro no Cadastro!", res.data.msg)
                     document.getElementById("signup-email").classList.add('invalid')
-                } else {
+                }
+            })
+            .catch(err => {
+                if (err.response.status == 404) {
                     document.getElementById("signup-email").classList.remove('invalid')
                     localStorage.setItem('name', this.state.form.name)                   
                     localStorage.setItem('email', this.state.form.email)
                     localStorage.setItem('birthDate', this.state.form.birthDate)
                     localStorage.setItem('phone', this.state.form.phone)
                     window.location = 'http://localhost:3000/register';
+                } else { 
+                    InvalidAlert("Erro no Cadastro!", "Ocorreu um erro desconhecido!")
                 }
-            })
-            .catch(err => {
-                console.log(err)
             })
     }
 

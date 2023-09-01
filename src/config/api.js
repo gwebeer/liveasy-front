@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getToken } from './Auth'
 
 const api = axios.create({
-    baseURL: "http://localhost:4000/"
+    baseURL: "https://liveasy-services.onrender.com/"
 })
 
 api.interceptors.request.use(async config => {
