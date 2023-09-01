@@ -107,19 +107,20 @@ export async function RegisterFieldValidation(infos) {
     }
 
     // Verifica se o e-mail já está cadastrado
-    let emailCadastrado = await api.get('auth/email/' + infos.email)
+    let emailCadastrado = await api.post('user/validate-email', { email: infos.email })
         .then(res => {
-            if (res.status == 203) {
-                InvalidAlert("Erro ao Cadastrar!", "O e-mail inserido já tem cadastro na LivEasy.")
+            if (res.status == 200) {
+                InvalidAlert("Erro no Cadastro!", res.data.msg)
+                document.getElementById("signup-email").classList.add('invalid')
                 return false
-                // document.getElementById("signup-email").classList.add('invalid')
-            } else {
-                // document.getElementById("signup-email").classList.remove('invalid')
-                return true
             }
         })
         .catch(err => {
-            console.log(err)
+            if (err.response.status == 404) {
+                return true
+            } else {
+                InvalidAlert("Erro no Cadastro!", "Ocorreu um erro desconhecido!")
+            }
         })
 
     if (!emailCadastrado) {
