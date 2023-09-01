@@ -39,12 +39,12 @@ class SideMenu extends Component {
                         Início
                     </li>
 
-                    <li className='option'>
+                    <li className='option' onClick={() => {window.location = "/item-list"}}>
                         <i> <FaClipboardList /> </i>
                         Lista de Itens
                     </li>
 
-                    <li className='option'>
+                    <li className='option' onClick={() => {window.location = "/coast-list"}}>
                         <i> <GiTwoCoins /> </i>
                         Lista de Custos
                     </li>
