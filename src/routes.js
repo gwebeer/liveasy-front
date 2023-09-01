@@ -4,6 +4,8 @@ import Home from "./pages/home.js";
 import AuthPage from "./pages/login.js";
 import Register from "./pages/register.js";
 import Profile from "./pages/profile.js";
+import ItemList from "./pages/itemList.js";
+import CoastList from "./pages/coastList.js";
 
 const Rotas = () => {
     return (
@@ -11,9 +13,13 @@ const Rotas = () => {
             <Routes>
                 <Route path='/auth' element={<AuthPage />}>  </Route>
                 <Route path='/' element={<Home />}>  </Route>
-                <Route path='/profile' element={<Profile/>}>  </Route>
                 <Route path='/register' element={<Register />}>  </Route>
                 <Route path='/resetPassword' element={<ResetPassword />}></Route>
+
+                <Route path='/profile' element={<Profile/>}>  </Route>
+                <Route path='/item-list' element={<ItemList/>}> </Route>
+                <Route path='/coast-list' element={<CoastList/>}> </Route>
+                
             </Routes>
         </BrowserRouter>
     )

@@ -28,7 +28,7 @@ class Profile extends Component {
             <div className='home-page'>
                 <SideMenu />
 
-                <div className='page-content'>
+                <div className='profile-page'>
                     <div className='page-title'>
                         <i> <FaUserCircle /> </i>
                         <h1> Minha Conta </h1>
