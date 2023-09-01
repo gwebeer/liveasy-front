@@ -23,7 +23,6 @@ class Register extends Component {
 
             },
             movingBudget: "",
-            stepDescription: "Selecione umas das etapas acima para ver mais detalhes sobre ela.",
             creationStatus: "Estamos criando seu usuário...",
             creationDescription: ""
         }
@@ -107,11 +106,9 @@ class Register extends Component {
         }
         // Valida se os campos foram preenchidos
         if(!await movingInformation(moveInfo)) {
-            console.log("aqui")
             return
         }
 
-        console.log("aqui")
         // Diminuir a altura do Box de etapa da mudança
         document.getElementById("move-information").style.height = '80px'
         // Mostrar símbolo de concluído no título da etapa de mudança
@@ -186,20 +183,22 @@ class Register extends Component {
             type: "customer",
             phone: this.state.form.phone,
         }
-        console.log(userInfo)
 
         // Registra usuário no banco de dados
-        let userRegister = (await api.post('/register/create', userInfo))
+        let userRegister = (await api.post('/user/register', userInfo))
 
         // Monta dicionário com informações para criação de um processo
         let processInfo = {
-            user: userRegister.data.userPost._id,
-            step: this.state.selectedStep,
-            status: "nao-iniciado",
+            user: userRegister.data._id,
+            status: "first_access",
+            income: this.state.form.income,
+            budget: this.state.form.movingBudget,
+            movingDate: this.state.form.movingDate
         }
-
+        
         // Registra processo no banco de dados
-        let processRegister = (await api.post('/process/create', processInfo))
+        let processRegister = (await api.post('/user/process/create', processInfo))
+        console.log(processRegister)
 
         // Exibe mensagem de sucesso
         await new Promise(r => setTimeout(r, 5000));
