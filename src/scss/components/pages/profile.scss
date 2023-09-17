@@ -23,7 +23,7 @@
         // background-color: #219EBC;
         // border-bottom: #023047 1px solid;
         margin-top: 20px;
-        
+
 
         button {
             border-bottom: #023047 1px solid;
@@ -38,6 +38,7 @@
                 border: #023047 solid 1px;
             }
         }
+
         .nav-link.active {
             background-color: #023047;
             color: #FFB703;
@@ -45,7 +46,276 @@
         }
     }
 
+    .tab-content {
+        // Conteudo das abas
 
+        #nav-personal {
+            width: 50%;
+
+            .personal-information-form {
+                width: 100%;
+                margin-top: 15px;
+                display: flex;
+                flex-direction: column;
+                // align-items: center;
+                transition: .5s ease-in-out;
+
+                .form-floating {
+                    width: 85%;
+                    margin: 3px 0;
+                    font-size: 13px;
+                    padding-bottom: 1.5px;
+
+                    input {
+                        font-size: 15px;
+                        background-color: #f4fbff;
+                    }
+
+                    @include res-lg {
+                        margin: 10px 0;
+                    }
+
+                    @include res-sm {
+                        margin: 5px 0;
+                        width: 85%;
+                    }
+                }
+
+                .signup-bt {
+                    width: 30%;
+                    height: 35px;
+                    justify-content: center;
+                    display: block;
+                    color: #023047;
+                    background-color: #219EBC;
+                    font-size: 15px;
+                    font-weight: bold;
+                    outline: none;
+                    border-radius: 10px;
+                    transition: .2s ease-in;
+                    cursor: pointer;
+                    margin-top: 15px;
+                    margin-bottom: 10px;
+
+                    &:hover {
+                        background-color: #FB8500;
+                    }
+
+                    @include res-lg {
+                        margin-top: 45px;
+                    }
+
+                    @include res-sm {
+                        margin-top: 25px;
+                    }
+                }
+            }
+        }
+
+        #nav-moving {
+            width: 40%;
+
+            .move-information-form {
+                margin-top: 15px;
+                // padding: 0 30px;
+                display: flex;
+                flex-direction: column;
+                // align-items: center;
+
+
+                .form-floating {
+                    width: 100%;
+                    margin: 3px 0;
+                    font-size: 13px;
+                    padding-bottom: 1.5px;
+
+                    input {
+                        font-size: 15px;
+                        background-color: #f4fbff;
+                    }
+
+                    @include res-lg {
+                        margin: 10px 0;
+                    }
+
+                    @include res-sm {
+                        margin: 5px 0;
+                        width: 85%;
+                    }
+                }
+
+                span {
+                    margin-top: 10px;
+                    margin-bottom: 15px;
+                }
+
+                .budget-buttons {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    width: 100%;
+                    margin-bottom: 10px;
+
+                    button {
+                        width: 17%;
+                        height: 35px;
+                        justify-content: center;
+                        display: block;
+                        color: #023047;
+                        background-color: #219EBC;
+                        font-size: 15px;
+                        font-weight: bold;
+                        outline: none;
+                        border-radius: 10px;
+                        transition: .2s ease-in;
+                        cursor: pointer;
+                        margin: 0px 5px 5px 10px;
+
+                        &:hover {
+                            background-color: #FB8500;
+                        }
+
+                        @include res-lg {
+                            margin-top: 45px;
+                        }
+
+                        @include res-sm {
+                            margin-top: 25px;
+                        }
+                    }
+
+                    .bt-select {
+                        background-color: #FB8500;
+                    }
+                }
+
+                .action-buttons {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    width: 100%;
+
+                    .action-bt {
+                        width: 30%;
+                        height: 35px;
+                        justify-content: center;
+                        display: block;
+                        color: #023047;
+                        background-color: #219EBC;
+                        font-size: 15px;
+                        font-weight: bold;
+                        outline: none;
+                        border-radius: 10px;
+                        transition: .2s ease-in;
+                        cursor: pointer;
+                        margin: 10px 5px 5px 10px;
+
+                        &:hover {
+                            background-color: #FB8500;
+                        }
+
+                        @include res-lg {
+                            margin-top: 45px;
+                        }
+
+                        @include res-sm {
+                            margin-top: 25px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #nav-access {
+            width: 30%;
+            padding-top: 15px;
+
+            .form-floating {
+                width: 100%;
+                margin: 3px 0;
+                font-size: 13px;
+                padding-bottom: 1.5px;
+                margin-top: 7px;
+
+                input {
+                    font-size: 15px;
+                    background-color: #f4fbff;
+                }
+
+                label {
+                    padding-top: 20px;
+                }
+
+                @include res-lg {
+                    margin: 10px 0;
+                }
+
+                @include res-sm {
+                    margin: 5px 0;
+                    width: 85%;
+                }
+            }
+
+            .requirement-title {
+                font-weight: 800;
+                font-size: 15px;
+                color: #219EBC;
+                margin-top: 7px;
+            }
+
+            .password-requirement {
+                font-weight: 100;
+                color: #868686;
+                margin-top: 7px;
+                font-size: 12px;
+
+                i {
+                    color: rgb(45, 161, 45);
+                }
+            }
+
+            .action-buttons {
+                display: flex;
+                flex-direction: row;
+                // justify-content: center;
+                width: 100%;
+
+                .action-bt {
+                    width: 30%;
+                    height: 35px;
+                    justify-content: center;
+                    display: block;
+                    color: #023047;
+                    background-color: #219EBC;
+                    font-size: 15px;
+                    font-weight: bold;
+                    outline: none;
+                    border-radius: 10px;
+                    transition: .2s ease-in;
+                    cursor: pointer;
+                    margin: 20px 5px 5px 10px;
+
+                    &:hover {
+                        background-color: #FB8500;
+                    }
+
+                    @include res-lg {
+                        margin-top: 45px;
+                    }
+
+                    @include res-sm {
+                        margin-top: 25px;
+                    }
+                }
+            }
+        }
+
+        #nav-properties {
+            color: #FB8500;
+            padding: 20px;
+            font-size: 20px;
+        }
+    }
 
 
 
