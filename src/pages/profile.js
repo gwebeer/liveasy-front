@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SideMenu from '../components/sideMenu';
 import { FaUserCircle, FaCheckCircle } from 'react-icons/fa';
+import { getUserInfo } from '../SupportFunctions';
 
 class Profile extends Component {
     constructor(props) {
@@ -13,7 +14,13 @@ class Profile extends Component {
                 email: "",
             }
         }
-
+        this.getUser = this.getUser.bind(this);
+    }
+    
+    async getUser(e) {
+        e.preventDefault();
+        let itemList = await getUserInfo(localStorage.getItem('processId'))
+        // console.log(localStorage.getItem('processId'))
     }
 
     render() {
@@ -80,7 +87,7 @@ class Profile extends Component {
                                     <label for="floatingInput">Telefone</label>
                                 </div>
 
-                                <button className='signup-bt' onClick={this.personalInfoBtClick}> Próximo </button>
+                                <button className='signup-bt' onClick={this.getUser}> Próximo </button>
                             </form>
 
                         </div>

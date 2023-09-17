@@ -257,3 +257,46 @@ export async function movingInformation(info) {
     }
     return true
 }
+
+
+export async function getUserInfo(userId) {
+    const find = await api.get('/user/' + userId)
+        .then(res => {
+            if (res.status == 200) {
+                return res.data
+            }
+        })
+        .catch(err => {
+            if (err.status == 400) {
+                return "O ID informato não é válido"
+            }
+            if (err.status == 404) {
+                return "O ID não foi encontrado na base"
+            }
+        });
+
+    return find
+}
+export async function getItemList(processId) {
+    const find = await api.get('/user/list/item/' + processId)
+        .then(res => {
+            if (res.status == 200) {
+                return res.data
+            }
+        })
+        .catch(err => {
+            if (err.status == 400) {
+                return "O ID informato não é válido"
+            }
+            if (err.status == 404) {
+                return "O ID não foi encontrado na base"
+            }
+        });
+
+    return find
+}
+
+
+// 200 deu certo
+// 400 id inválido
+// id não existe no banco
