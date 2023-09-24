@@ -33,7 +33,7 @@ export async function RegisterEmail(email) {
 }
 
 // Valida os campos de formulário de cadastro
-export async function RegisterFieldValidation(infos) {
+export async function RegisterFieldValidation(infos, emailValidate=true) {
 
     // Verifica se o campo de nome foi preenchido
     if (infos.name === "") {
@@ -106,6 +106,11 @@ export async function RegisterFieldValidation(infos) {
         // document.getElementById("phone").classList.remove('invalid')
     }
 
+    if (!emailValidate) {
+        document.getElementById("signup-email").classList.remove('invalid')
+        return true
+    }
+
     // Verifica se o e-mail já está cadastrado
     let emailCadastrado = await api.post('user/validate-email', { email: infos.email })
         .then(res => {
@@ -117,17 +122,20 @@ export async function RegisterFieldValidation(infos) {
         })
         .catch(err => {
             if (err.response.status == 404) {
+                document.getElementById("signup-email").classList.remove('invalid')
                 return true
             } else {
                 InvalidAlert("Erro no Cadastro!", "Ocorreu um erro desconhecido!")
+                document.getElementById("signup-email").classList.add('invalid')
             }
         })
 
-    if (!emailCadastrado) {
-        return false
-    } else {
-        return true
-    }
+        if (!emailCadastrado) {
+            return false
+        } else {
+            return true
+        }
+
 }
 
 // Valida os campos de formulário de cadastro
@@ -258,6 +266,31 @@ export async function movingInformation(info) {
     return true
 }
 
+export async function addClass(finder, className, idMethod = false) {
+
+    if (idMethod) {
+        let elements = document.getElementById(finder).classList.add(className)
+    }
+    if (!idMethod) {
+        let elements = document.getElementsByClassName(finder);
+        Object.values(elements).forEach((element) => {
+            element.classList.add(className)
+        })
+    }
+}
+export async function removeClass(finder, className, idMethod = false) {
+
+    if (idMethod) {
+        let elements = document.getElementById(finder).classList.remove(className)
+    }
+    if (!idMethod) {
+        let elements = document.getElementsByClassName(finder);
+        Object.values(elements).forEach((element) => {
+            element.classList.remove(className)
+        })
+    }
+}
+
 
 export async function getUserInfo(userId) {
     const find = await api.get('/user/' + userId)
@@ -279,6 +312,24 @@ export async function getUserInfo(userId) {
 }
 export async function getItemList(processId) {
     const find = await api.get('/user/list/item/' + processId)
+        .then(res => {
+            if (res.status == 200) {
+                return res.data
+            }
+        })
+        .catch(err => {
+            if (err.status == 400) {
+                return "O ID informato não é válido"
+            }
+            if (err.status == 404) {
+                return "O ID não foi encontrado na base"
+            }
+        });
+
+    return find
+}
+export async function getProcessInfo(processId) {
+    const find = await api.get('/user/process/' + processId)
         .then(res => {
             if (res.status == 200) {
                 return res.data

@@ -78,7 +78,7 @@ class AuthPage extends Component {
                 } else if (err.response.status == 404) {
                     InvalidAlert("Login Inválido!", err.response.data.msg)                    
                 } else {
-                    console.log(err)
+                    InvalidAlert("Login Inválido!", err.response.data.msg)
                 }
             })
     }
