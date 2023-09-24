@@ -32,7 +32,7 @@ class PropertiesPage extends Component {
                         <h1> Imóveis de Interesse </h1>
                     </div>
                     <span> Por aqui você pode controlar suas preferências de imóveis e seus imóveis de interesse. </span>
-
+                    <br />
                 </div>
             </div >
 
