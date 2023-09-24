@@ -60,6 +60,8 @@
                 // align-items: center;
                 transition: .5s ease-in-out;
 
+
+                // 1px solid #ced4da
                 .form-floating {
                     width: 85%;
                     margin: 3px 0;
@@ -70,7 +72,11 @@
                         font-size: 15px;
                         background-color: #f4fbff;
                     }
-
+                    .hide-input {
+                        background-color: #ffffff00;
+                        border: none;
+                    }
+                    
                     @include res-lg {
                         margin: 10px 0;
                     }
@@ -79,10 +85,11 @@
                         margin: 5px 0;
                         width: 85%;
                     }
+                    
                 }
 
-                .signup-bt {
-                    width: 30%;
+                #signup-bt {
+                    width: 25%;
                     height: 35px;
                     justify-content: center;
                     display: block;
@@ -133,6 +140,10 @@
                         font-size: 15px;
                         background-color: #f4fbff;
                     }
+                    .hide-input {
+                        background-color: #ffffff00;
+                        border: none;
+                    }
 
                     @include res-lg {
                         margin: 10px 0;
@@ -144,17 +155,24 @@
                     }
                 }
 
-                span {
-                    margin-top: 10px;
-                    margin-bottom: 15px;
-                }
-
-                .budget-buttons {
+                .moving-budget-section {
+                    margin: 15px 0;
                     display: flex;
                     flex-direction: row;
-                    justify-content: center;
+
+                    .form-check {
+                        margin-left: 15px;
+                    }
+                }
+
+                
+
+                .access-buttons {
+                    display: flex;
+                    flex-direction: row;
                     width: 100%;
                     margin-bottom: 10px;
+                    margin-top: 15px;
 
                     button {
                         width: 17%;
@@ -189,40 +207,7 @@
                     }
                 }
 
-                .action-buttons {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    width: 100%;
-
-                    .action-bt {
-                        width: 30%;
-                        height: 35px;
-                        justify-content: center;
-                        display: block;
-                        color: #023047;
-                        background-color: #219EBC;
-                        font-size: 15px;
-                        font-weight: bold;
-                        outline: none;
-                        border-radius: 10px;
-                        transition: .2s ease-in;
-                        cursor: pointer;
-                        margin: 10px 5px 5px 10px;
-
-                        &:hover {
-                            background-color: #FB8500;
-                        }
-
-                        @include res-lg {
-                            margin-top: 45px;
-                        }
-
-                        @include res-sm {
-                            margin-top: 25px;
-                        }
-                    }
-                }
+                
             }
         }
 
@@ -281,7 +266,7 @@
                 width: 100%;
 
                 .action-bt {
-                    width: 30%;
+                    width: 40%;
                     height: 35px;
                     justify-content: center;
                     display: block;
@@ -293,7 +278,7 @@
                     border-radius: 10px;
                     transition: .2s ease-in;
                     cursor: pointer;
-                    margin: 20px 5px 5px 10px;
+                    margin: 20px 5px 5px 0px;
 
                     &:hover {
                         background-color: #FB8500;

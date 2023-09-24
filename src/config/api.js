@@ -3,6 +3,7 @@ import { getToken } from './Auth'
 
 const api = axios.create({
     baseURL: "https://liveasy-services.onrender.com/"
+    // baseURL: "http://localhost:4000/"
 })
 
 api.interceptors.request.use(async config => {
