@@ -1,0 +1,103 @@
+.ideal-properties-page {
+    width: 85%;
+    padding: 25px 40px;
+    overflow: auto;
+
+    .page-title {
+        display: flex;
+        flex-direction: row;
+        color: #219EBC;
+        margin-bottom: 15px;
+
+        h1 {
+            font-size: 35px;
+            font-weight: 900;
+            margin-top: 2px;
+        }
+
+        i {
+            margin-right: 15px;
+            font-size: 35px;
+        }
+    }
+
+    .page-description {
+        line-height: 12px;
+    }
+
+    form {
+        margin-top: 20px;
+        border-top: 1px solid #98b7c7;
+
+        .form-question {
+            padding-top: 20px;
+
+            .question-title {
+                font-weight: 300;
+
+                label {
+                    color: #219EBC;
+                    font-weight: 800;
+                }
+            }
+
+            .choice-options {
+                padding-top: 10px;
+                padding-left: 15px;
+
+                .form-check {
+                    margin-top: 10px;
+
+                    label {
+                        padding-top: 4px;
+                    }
+                }
+                
+                button {
+                    // width: 120px;
+                    height: 35px;
+                    justify-content: center;
+                    display: block;
+                    color: #023047;
+                    background-color: #219EBC;
+                    font-size: 15px;
+                    font-weight: bold;
+                    outline: none;
+                    border-radius: 10px;
+                    transition: .2s ease-in;
+                    cursor: pointer;
+                    margin-top: 10px;
+                    padding: 5px 20px;
+                    margin: 10px;
+        
+                    &:hover {
+                        background-color: #FB8500;
+                    }
+                }
+            }
+        }
+
+        button {
+            height: 35px;
+            justify-content: center;
+            display: block;
+            color: #023047;
+            background-color: #219EBC;
+            font-size: 15px;
+            font-weight: bold;
+            outline: none;
+            border-radius: 10px;
+            transition: .2s ease-in;
+            cursor: pointer;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            padding: 5px 20px;
+
+            &:hover {
+                background-color: #FB8500;
+            }
+        }
+        
+    }
+    
+}
