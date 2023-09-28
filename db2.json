@@ -1,0 +1,39 @@
+{
+    "data": [
+      {
+        "id": 1,
+        "title": "Água",
+        "value": 240.00,
+        "category": "Básico",
+        "date": "12/02/2022"
+      },
+      {
+        "id": 2,
+        "title": "Luz",
+        "value": 240.00,
+        "category": "Básico",
+        "date": "12/02/2022"
+      },
+      {
+        "id": 3,
+        "title": "Internet",
+        "value": 240.00,
+        "category": "Básico",
+        "date": "12/02/2022"
+      },
+      {
+        "id": 4,
+        "title": "Gás",
+        "value": 240.00,
+        "category": "Básico",
+        "Date": "12/02/2022"
+      },
+      {
+        "id": 5,
+        "title": "IPTU",
+        "value": 240.00,
+        "category": "Básico",
+        "date": "12/02/2022"
+      }
+    ]
+  }
