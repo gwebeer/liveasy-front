@@ -1,70 +1,70 @@
 {
-    "data": [
-      {
-        "id": 1,
-        "title": "Televisão",
-        "convenient": "Sala de Estar",
-        "category": "Eletrônico",
-        "priority": "Média",
-        "value": 10,
-        "valuePaid": 0,
-        "bought": true,
-        "boughtDate": "2022-10-12"
-      },
-      {
-        "id": 2,
-        "title": "Guarda-roupa",
-        "convenient": "Quarto",
-        "category": "Móveis",
-        "priority": "Alta",
-        "value": 10,
-        "valuePaid": 0,
-        "bought": true,
-        "boughtDate": "2022-10-12"
-      },
-      {
-        "id": 3,
-        "title": "Lixeira",
-        "convenient": "Lavanderia",
-        "category": "Utensílio",
-        "priority": "Alta",
-        "value": 10,
-        "valuePaid": 0,
-        "bought": true,
-        "boughtDate": "2022-10-12"
-      },
-      {
-        "id": 4,
-        "title": "item4",
-        "convenient": "Lavanderia",
-        "category": "Utensílio",
-        "priority": "Alta",
-        "value": 10,
-        "valuePaid": 0,
-        "bought": true,
-        "boughtDate": "2022-10-12"
-      },
-      {
-        "id": 5,
-        "title": "item5",
-        "convenient": "Lavanderia",
-        "category": "Utensílio",
-        "priority": "Alta",
-        "value": 10,
-        "valuePaid": 0,
-        "bought": true,
-        "boughtDate": "2022-10-12"
-      },
-      {
-        "id": 6,
-        "title": "nob",
-        "convenient": "Lavanderia",
-        "category": "Utensílio",
-        "priority": "Alta",
-        "value": 10,
-        "valuePaid": 0,
-        "bought": false,
-        "boughtDate": ""
-      }
-    ]
-  }
+  "data": [
+    {
+      "id": 1,
+      "title": "Televisão",
+      "convenient": "Sala de Estar",
+      "category": "Eletrônico",
+      "priority": "Média",
+      "value": 2300,
+      "valuePaid": 0,
+      "bought": true,
+      "boughtDate": "2022-10-12"
+    },
+    {
+      "id": 2,
+      "title": "Guarda-roupa",
+      "convenient": "Quarto",
+      "category": "Móveis",
+      "priority": "Alta",
+      "value": 10,
+      "valuePaid": 0,
+      "bought": false,
+      "boughtDate": ""
+    },
+    {
+      "id": 3,
+      "title": "Lixeira",
+      "convenient": "Lavanderia",
+      "category": "Utensílio",
+      "priority": "Alta",
+      "value": 10,
+      "valuePaid": 0,
+      "bought": false,
+      "boughtDate": ""
+    },
+    {
+      "id": 4,
+      "title": "Geladeira",
+      "convenient": "Cozinha",
+      "category": "Eletrodomésticos",
+      "priority": "Alta",
+      "value": 2500,
+      "valuePaid": 0,
+      "bought": false,
+      "boughtDate": ""
+    },
+    {
+      "id": 5,
+      "title": "Vassoura",
+      "convenient": "Lavanderia",
+      "category": "Ferramenta",
+      "priority": "Alta",
+      "value": 80,
+      "valuePaid": 0,
+      "bought": false,
+      "boughtDate": ""
+    },
+    {
+      "id": 6,
+      "title": "Sofá",
+      "convenient": "Sala de Estar",
+      "category": "Móveis",
+      "priority": "Média",
+      "value": 1500,
+      "valuePaid": 0,
+      "bought": false,
+      "boughtDate": ""
+    }
+  ]
+}

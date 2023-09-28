@@ -3,19 +3,24 @@ import SideMenu from '../components/sideMenu';
 import api from '../config/api';
 import { BsBuildingFillAdd } from 'react-icons/bs';
 import { FaUserCog } from 'react-icons/fa';
+import { getIdealProperty, idealPropertieValidation } from '../SupportFunctions';
 
 
 class PropertiesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            idealPropertyModal: true
         }
 
     }
 
     async componentDidMount() {
+        let idealPropertyRegister = await getIdealProperty(localStorage.getItem('userId'))
 
+        if (idealPropertyRegister === "O ID não foi encontrado na base") {
+            this.setState({ idealPropertyModal: false })
+        }
     }
 
     render() {
@@ -34,14 +39,16 @@ class PropertiesPage extends Component {
                     </div>
                     <span> Por aqui vamos te ajudar a encontrar o imóvel ideal para seu gosto e necessidade. </span>
 
-                    <section className='ideal-properties-section'>
-                        <div className='section-title'>
-                            <i> <FaUserCog /> </i>
-                            <h3> Ainda não sabemos o que precisa </h3>
-                        </div>
-                        <label> Responda algumas perguntas para conseguirmos definir o imóvel com maior compatilidade de seu gosto e necessidade. Você leva 3 minutos para preencher.</label>
-                        <button onClick={() => {window.location = "/ideal-propertie"}}> Definir Minhas Preferências </button>
-                    </section>
+                    {this.state.idealPropertyModal ? '' :
+                        <section className='ideal-properties-section'>
+                            <div className='section-title'>
+                                <i> <FaUserCog /> </i>
+                                <h3> Ainda não sabemos o que precisa </h3>
+                            </div>
+                            <label> Responda algumas perguntas para conseguirmos definir o imóvel com maior compatilidade de seu gosto e necessidade. Você leva 3 minutos para preencher.</label>
+                            <button onClick={() => { window.location = "/ideal-propertie" }}> Definir Minhas Preferências </button>
+                        </section>
+                    }
 
                     <section className='properties-header'>
                         <nav>
@@ -60,15 +67,9 @@ class PropertiesPage extends Component {
                             </div>
                         </nav>
 
-
-
-
-
-
-                        {/* <button id='new-propertie'> Novo Imóvel </button>
-                        <button id='new-propertie'> Pesquisa Automática </button>
-                        <button id='new-propertie'> Editar Ranking </button> */}
                     </section>
+
+
 
 
 

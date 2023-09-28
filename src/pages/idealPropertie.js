@@ -3,7 +3,7 @@ import SideMenu from '../components/sideMenu';
 import api from '../config/api';
 import { BsBuildingFillAdd, BsFillHouseHeartFill } from 'react-icons/bs';
 import { FaUserCog } from 'react-icons/fa';
-import { InvalidAlert, idealPropertieValidation } from '../SupportFunctions';
+import { InvalidAlert, SuccessAlert, idealPropertieValidation } from '../SupportFunctions';
 
 
 class IdealPropertie extends Component {
@@ -19,7 +19,7 @@ class IdealPropertie extends Component {
                 bathrooms: "",
                 parkingSpaces: "",
                 isFurnished: "",
-                infrastructure: []
+                infraestructure: []
             }
 
         }
@@ -33,14 +33,14 @@ class IdealPropertie extends Component {
     }
 
     async formData(e) {
-        if (e.target.name === 'infrastructure') {
+        if (e.target.name === 'infraestructure') {
             let newState = this.state.idealPropertieForm
 
             if (e.target.checked) {
-                newState['infrastructure'].push(e.target.id)
+                newState['infraestructure'].push(e.target.id)
             } else {
-                let index = newState['infrastructure'].indexOf(e.target.id)
-                newState['infrastructure'].splice(index, 1)
+                let index = newState['infraestructure'].indexOf(e.target.id)
+                newState['infraestructure'].splice(index, 1)
             }
             this.setState({ idealPropertieForm: newState })
             return
@@ -66,17 +66,22 @@ class IdealPropertie extends Component {
             propertyType: this.state.idealPropertieForm.propertyType,
             rooms: this.state.idealPropertieForm.rooms,
             bathrooms: this.state.idealPropertieForm.bathrooms,
-            parkingSpace: this.state.idealPropertieForm.parkingSpaces,
-            infrastructure: this.state.idealPropertieForm.infrastructure,
-            furnished: this.state.idealPropertieForm.isFurnished == "furnished" ? true : false,
+            parkingSpaces: this.state.idealPropertieForm.parkingSpaces,
+            infraestructure: this.state.idealPropertieForm.infraestructure,
+            isFurnished: this.state.idealPropertieForm.isFurnished == "furnished" ? true : false,
             isCondominium: this.state.idealPropertieForm.isCondominium == "condominium" ? true : false
         }
 
         console.log(requestBody)
         // Registra usuário no banco de dados
-        let userRegister = (await api.post('/user/property/add', requestBody))
-
-        console.log(userRegister)
+        api.post('/user/property/add', requestBody)
+            .then((response) => {
+                SuccessAlert("Cadastro Realizado", "Preferências cadastradas! Você pode alterar elas através do meu perfil.")
+                window.location = 'http://localhost:3000/properties'
+            })
+            .catch((error) => {
+                InvalidAlert("Preenchimento Inválido!", error.response.data.error)
+            })
     }
 
 
@@ -184,43 +189,43 @@ class IdealPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infrastructure" id="grill" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="grill" onChange={this.formData} />
                                     <label class="form-check-label" for="grill">
                                         Churrasqueira
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infrastructure" id="party-room" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="party-room" onChange={this.formData} />
                                     <label class="form-check-label" for="party-room">
                                         Salão de Festas
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infrastructure" id="playroom" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="playroom" onChange={this.formData} />
                                     <label class="form-check-label" for="playroom">
                                         Salão de Jogos
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infrastructure" id="gym" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="gym" onChange={this.formData} />
                                     <label class="form-check-label" for="gym">
                                         Academia
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infrastructure" id="pool" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="pool" onChange={this.formData} />
                                     <label class="form-check-label" for="pool">
                                         Piscina
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infrastructure" id="laundry" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="laundry" onChange={this.formData} />
                                     <label class="form-check-label" for="laundry">
                                         Lavanderia Compartilhada
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infrastructure" id="steam-room" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="steam-room" onChange={this.formData} />
                                     <label class="form-check-label" for="steam-room">
                                         Sauna
                                     </label>

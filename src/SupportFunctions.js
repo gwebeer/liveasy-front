@@ -366,6 +366,25 @@ export async function getCoastItemList(processId) {
 
     return find
 }
+export async function getIdealProperty(userId) {
+    const find = await api.get('/user/property/' + userId)
+        .then(res => {
+            if (res.status == 200) {
+                console.log(res.data)
+                return res.data
+            }
+        })
+        .catch(err => {
+            if (err.response.status == 400) {
+                return "O ID informato não é válido"
+            }
+            if (err.response.status == 404) {
+                return "O ID não foi encontrado na base"
+            }
+        });
+
+    return find
+}
 
 export async function idealPropertieValidation(propertieInfo) {
 
