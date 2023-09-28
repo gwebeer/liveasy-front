@@ -1,6 +1,6 @@
 import { Modal } from 'bootstrap';
-import api from './config/api';
 import moment from 'moment/moment';
+import api from './config/api';
 
 // Gera alerta de Falha
 export async function InvalidAlert(title, description) {
@@ -347,6 +347,25 @@ export async function getProcessInfo(processId) {
     return find
 }
 
+export async function getCoastItemList(processId) {
+    const find = await api.get('/user/list/cost/item/' + processId)
+        .then(res => {
+            if (res.status == 200) {
+                //console.log(res.data)
+                return res.data
+            }
+        })
+        .catch(err => {
+            if (err.status == 400) {
+                return "O ID informato não é válido"
+            }
+            if (err.status == 404) {
+                return "O ID não foi encontrado na base"
+            }
+        });
+
+    return find
+}
 
 // 200 deu certo
 // 400 id inválido
