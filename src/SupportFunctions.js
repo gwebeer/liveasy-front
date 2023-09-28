@@ -33,7 +33,7 @@ export async function RegisterEmail(email) {
 }
 
 // Valida os campos de formulário de cadastro
-export async function RegisterFieldValidation(infos, emailValidate=true) {
+export async function RegisterFieldValidation(infos, emailValidate = true) {
 
     // Verifica se o campo de nome foi preenchido
     if (infos.name === "") {
@@ -130,11 +130,11 @@ export async function RegisterFieldValidation(infos, emailValidate=true) {
             }
         })
 
-        if (!emailCadastrado) {
-            return false
-        } else {
-            return true
-        }
+    if (!emailCadastrado) {
+        return false
+    } else {
+        return true
+    }
 
 }
 
@@ -366,6 +366,41 @@ export async function getCoastItemList(processId) {
 
     return find
 }
+
+export async function idealPropertieValidation(propertieInfo) {
+
+    let question = []
+    Object.keys(propertieInfo).forEach((key) => {
+        if (propertieInfo[key] === "" && key !== 'infrastructure') {
+            switch (key) {
+                case 'isForRent':
+                    question.push("1")
+                    break
+                case 'propertyType':
+                    question.push("2")
+                    break
+                case 'isCondominium':
+                    question.push("3")
+                    break
+                case 'rooms':
+                    question.push("5")
+                    break
+                case 'bathrooms':
+                    question.push("6")
+                    break
+                case 'parkingSpaces':
+                    question.push("7")
+                    break
+                case 'furnished':
+                    question.push("8")
+                    break
+            }
+        }
+    })
+    
+    return question
+}
+
 
 // 200 deu certo
 // 400 id inválido

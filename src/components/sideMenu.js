@@ -49,7 +49,7 @@ class SideMenu extends Component {
                         Lista de Custos
                     </li>
 
-                    <li className='option'>
+                    <li className='option' onClick={() => {window.location = "/properties"}}>
                         <i> <BsBuildingFillAdd /> </i>
                         Imóveis
                     </li>

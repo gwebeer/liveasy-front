@@ -6,6 +6,8 @@ import Register from "./pages/register.js";
 import Profile from "./pages/profile.js";
 import ItemList from "./pages/itemList.js";
 import CoastList from "./pages/coastList.js";
+import PropertiesPage from "./pages/properties.js";
+import IdealPropertie from "./pages/idealPropertie.js";
 
 const Rotas = () => {
     return (
@@ -17,6 +19,8 @@ const Rotas = () => {
                 <Route path='/resetPassword' element={<ResetPassword />}></Route>
 
                 <Route path='/profile' element={<Profile/>}>  </Route>
+                <Route path='/properties' element={<PropertiesPage />}>  </Route>
+                <Route path='/ideal-propertie' element={<IdealPropertie />}>  </Route>
                 <Route path='/item-list' element={<ItemList/>}> </Route>
                 <Route path='/coast-list' element={<CoastList/>}> </Route>
                 
