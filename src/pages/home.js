@@ -13,7 +13,7 @@ class Home extends Component {
 
     render() {
         if (!localStorage.getItem('token')) {
-            window.location = 'http://localhost:3000/auth';
+            window.location = '/auth';
         }
 
         return (
