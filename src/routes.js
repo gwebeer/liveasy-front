@@ -8,6 +8,7 @@ import ItemList from "./pages/itemList.js";
 import CoastList from "./pages/coastList.js";
 import PropertiesPage from "./pages/properties.js";
 import IdealPropertie from "./pages/idealPropertie.js";
+import Calendar from "./pages/Planner/index.js";
 
 const Rotas = () => {
     return (
@@ -23,7 +24,7 @@ const Rotas = () => {
                 <Route path='/ideal-propertie' element={<IdealPropertie />}>  </Route>
                 <Route path='/item-list' element={<ItemList/>}> </Route>
                 <Route path='/coast-list' element={<CoastList/>}> </Route>
-                
+                <Route path='/calendar' element={<Calendar/>}> </Route>
             </Routes>
         </BrowserRouter>
     )
