@@ -8,11 +8,15 @@ import { AiOutlineRight } from 'react-icons/ai'
 import Schedule from '../Schedule';
 import Service from '../ScheduleView/ServiceView';
 import ScheduleView from '../ScheduleView';
+import { FaRegCalendarPlus } from 'react-icons/fa'
+import { Modal } from 'bootstrap';
+
+
 
 const HOURS = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
     "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"]
 
-class PlannerWeek extends Component {
+class CalendarWeek extends Component {
 
     constructor(props) {
         super(props);
@@ -46,10 +50,11 @@ class PlannerWeek extends Component {
         this.dayMount = this.dayMount.bind(this);
         this.databaseReturn = this.databaseReturn.bind(this);
         this.calendarInit = this.calendarInit.bind(this);
-        this.plannerTitle = this.plannerTitle.bind(this);
+        this.calendarTitle = this.calendarTitle.bind(this);
         this.controllerButtons = this.controllerButtons.bind(this);
         // this.controllerDateInput = this.controllerDateInput.bind(this);
-        this.scheduleClick = this.scheduleClick.bind(this)
+        this.scheduleClick = this.scheduleClick.bind(this);
+        this.newScheduleClick = this.newScheduleClick.bind(this);
     }
 
     // Atualiza o state scheduleInfo com os dados do atendimento clicado
@@ -217,7 +222,7 @@ class PlannerWeek extends Component {
     }
 
     // Retorna o primeiro e ultimo para o título da agenda
-    plannerTitle() {
+    calendarTitle() {
         let firstDay = weekDates(moment(this.state.selectedDate, "DD/MM/YYYY").format("DD/MM/YYYY")).firstDay
         let lastDay = weekDates(moment(this.state.selectedDate, "DD/MM/YYYY").format("DD/MM/YYYY")).lastDay
 
@@ -281,6 +286,12 @@ class PlannerWeek extends Component {
         }
     }
 
+    newScheduleClick() {
+        var modalElement = document.getElementById("new-schedule")
+        var bsModal = new Modal(modalElement)
+        bsModal.toggle()
+    }
+
     // // Muda o state de data selecionado quando alterado o input do controller
     // controllerDateInput(e) {
     //     let newValue = moment(e.target.value, "YYYY-MM-DD").format("DD/MM/YYYY")
@@ -303,10 +314,12 @@ class PlannerWeek extends Component {
 
     render() {
         return (
-            <section className='planner-month mt-3'>
+            <section className='calendar-month mt-3'>
                 <div className='container-lg date-controller'>
-                    <div className='row'>
-                        <div className='col-xxl-2 order-xxl-1 col-lg-2 order-lg-1 col-md-12 order-md-1 align'>
+
+                    <div className='row month-header'>
+
+                        <div className='col-xxl-3 col-lg-3 col-md-12 align'>
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <button type="button" class="btn bt-controller" onClick={() => { this.controllerButtons(1) }}> <AiOutlineLeft /> </button>
                                 <button type="button" class="btn bt-controller" onClick={() => { this.controllerButtons(2) }}> Hoje </button>
@@ -314,18 +327,16 @@ class PlannerWeek extends Component {
                             </div>
                         </div>
 
-                        <div className='col-xxl-8 order-xxl-2 col-lg-7 order-lg-2 col-md-12 order-md-3 align'>
-                            <h3 className='month-name'> {this.plannerTitle()} </h3>
+                        <div className='col-xxl-6 col-lg-6 col-md-12 align'>
+                            <h3 className='month-name'> {this.calendarTitle()} </h3>
                         </div>
 
-                        {/* <div className='col-xxl-2 order-xxl-3 col-lg-3 order-lg-3 col-md-5 order-md-2'>
-                            <div class="form-floating">
-                                <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com"
-                                    value={moment(this.state.selectedDate, "DD/MM/YYYY").format("YYYY-MM-DD")}
-                                    onChange={this.controllerDateInput} />
-                                <label for="floatingInput">Selecione uma data</label>
-                            </div>
-                        </div> */}
+                        <div className='col-xxl-3 col-lg-3 new-schedule'>
+                            <button onClick={this.newScheduleClick} className='new-schedule-button'>
+                                <span> <FaRegCalendarPlus color="white" /> </span>
+                                Agendar Horário
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -396,4 +407,4 @@ class PlannerWeek extends Component {
     }
 }
 
-export default PlannerWeek
+export default CalendarWeek

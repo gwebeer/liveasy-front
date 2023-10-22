@@ -8,7 +8,7 @@ import Schedule from '../Schedule';
 const HOURS = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
     "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30"]
 
-class PlannerMonth extends Component {
+class CalendarMonth extends Component {
 
     constructor(props) {
         super(props);
@@ -138,7 +138,7 @@ class PlannerMonth extends Component {
 
     render() {
         return (
-            <section className='planner-month mt-3'>
+            <section className='calendar-month mt-3'>
                 <div className='container-lg date-controller'>
                     <div className='row'>
                         <div className='col-xxl-2 order-xxl-1 col-lg-2 order-lg-1 col-md-6 order-md-1 align'>
@@ -153,12 +153,12 @@ class PlannerMonth extends Component {
                             <h3 className='month-name'> Dezembro / 2022 </h3>
                         </div>
 
-                        <div className='col-xxl-2 order-xxl-3 col-lg-3 order-lg-3 col-md-5 order-md-2'>
+                        {/* <div className='col-xxl-2 order-xxl-3 col-lg-3 order-lg-3 col-md-5 order-md-2'>
                             <div class="form-floating">
                                 <input type="month" class="form-control" id="floatingInput" placeholder="name@example.com" />
                                 <label for="floatingInput">Selecione um mês</label>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -227,4 +227,4 @@ class PlannerMonth extends Component {
     }
 }
 
-export default PlannerMonth
+export default CalendarMonth

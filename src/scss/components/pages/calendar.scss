@@ -1,13 +1,36 @@
 .calendar-page {
-    height: 100vh;
-    margin: 0;
-    display: block;
-    padding: 0px;
+    // height: 100vh;
+    // display: block;
+    // margin: 30px;
+    width: 100%;
     overflow: auto;
+    // padding: 0 20px;
 
     @include res-sm {
         padding: 0;
     }
+
+    .title-section {
+        margin: 25px 65px;
+
+        .page-title {
+            display: flex;
+            flex-direction: row;
+            color: #219EBC;
+
+            h1 {
+                font-size: 35px;
+                font-weight: 900;
+                margin-top: 2px;
+            }
+
+            i {
+                margin-right: 15px;
+                font-size: 35px;
+            }
+        }
+    }
+
 
     .calendar-header {
         padding: 0;
@@ -199,6 +222,38 @@
             .date-controller {
                 // background-color: darkblue;
 
+                .month-header {
+                    display: flex;
+                    flex-direction: row;
+
+                    .new-schedule-button {
+                        display: flex;
+                        align-items: center;
+                        flex-direction: row;
+                        justify-content: center;
+                        text-align: center;
+                        background-color: #219EBC;
+                        color: white;
+                        padding: 10px 15px;
+                        border-radius: 5px;
+                        font-weight: 600;
+                        letter-spacing: 2px;
+                        text-transform: uppercase;
+                        font-size: 14px;
+                        transition: all 0.2s linear;
+
+                        &:hover {
+                            background-color: #1e5468;
+                            transition: all 0.2s linear;
+                        }
+
+                        span {
+                            margin-right: 10px;
+                            margin-bottom: 3px;
+                        }
+                    }
+                }
+
                 .align {
                     align-items: center;
                     display: flex;
@@ -208,7 +263,7 @@
                 }
 
                 .bt-controller {
-                    background-color: #438ba8;
+                    background-color: #219EBC;
                     border: none;
                     padding: 9px 12px;
                     transition: all 0.25s linear;
@@ -234,7 +289,7 @@
             }
 
             .calendar {
-                height: 67vh;
+                height: 70vh;
                 // background-color: #137c72;
                 display: flex;
                 flex-direction: row;
@@ -258,8 +313,8 @@
                     // background-color: #137c72;
 
                     .day {
-                        background-color: rgb(161, 218, 219);
-                        border-bottom: rgb(0, 82, 83) 2px solid;
+                        background-color: #023047;
+                        // border-bottom: rgb(0, 82, 83) 2px solid;
                         width: 100%;
                         height: 50px;
                         font-size: 17px;
@@ -271,11 +326,13 @@
                         flex-direction: column;
                         justify-content: center;
                         text-align: center;
+                        color: #f8f9f9;
+                        font-weight: 800;
 
                         .hours {
                             font-size: 11px;
                             letter-spacing: 2px;
-                            color: #797979;
+                            color: #c0ced5;
                         }
                     }
 
@@ -306,7 +363,7 @@
 
                     .available {
                         background-color: rgb(236, 236, 236);
-                        border-bottom: 1px solid rgb(207, 207, 207);
+                        border: 1px solid rgb(207, 207, 207);
                         cursor: auto;
                     }
                 }
