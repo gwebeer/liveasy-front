@@ -16,10 +16,11 @@ class NewSchedule extends Component {
             serviceList: [],
 
             form: {
-                customer: "",
-                date: "",
-                hour: "",
-                services: []
+                title: "",
+                initial_date: "",
+                final_date: "",
+                repeat: "",
+                repeatEvery: ""
             }
         }
 
@@ -28,6 +29,7 @@ class NewSchedule extends Component {
         this.checkBoxChange = this.checkBoxChange.bind(this);
         this.serviceList = this.serviceList.bind(this);
         this.searchCustomerDatabase = this.searchCustomerDatabase.bind(this);
+        this.addReminder = this.addReminder.bind(this);
     }
 
     componentDidMount() {
@@ -91,14 +93,14 @@ class NewSchedule extends Component {
 
     searchCustomerDatabase() {
         firebase.firestore().collection("customers")
-            .where("name", ">", this.state.form.customer)
+            .where("name", ">", this.state.form.title)
             .orderBy("name", "asc")
             .get()
             .then((snapshot) => {
                 let lista = []
 
                 snapshot.forEach((doc) => {
-                    if (doc.data().name.indexOf(this.state.form.customer) != -1) {
+                    if (doc.data().name.indexOf(this.state.form.title) != -1) {
                         lista.push(<option value={doc.data().name}>{doc.data().name}</option>)
                     }
                 })
@@ -106,6 +108,11 @@ class NewSchedule extends Component {
                 console.log(lista)
                 this.setState({ customerList: lista })
             })
+    }
+
+    addReminder() {
+        firebase.firestore().collection("CalendarTest")
+            .add(this.state.form);
     }
 
     render() {
@@ -123,12 +130,9 @@ class NewSchedule extends Component {
                                 <div className='row'>
                                     <div className='col customer-input'>
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" placeholder="Cliente" name="customer" list="customer-schedule-list"
-                                                value={this.state.form.customer} onChange={this.formData} />
-                                            <datalist id="customer-schedule-list">
-                                                {this.state.customerList}
-                                            </datalist>
-                                            <label for="floatingInput">Cliente</label>
+                                            <input type="text" class="form-control" placeholder="Nome do Lembrete" name="title"
+                                                value={this.state.form.title} onChange={this.formData} />   
+                                            <label for="floatingInput">Nome do Lembrete</label>
                                         </div>
 
 
@@ -138,13 +142,39 @@ class NewSchedule extends Component {
                                 <div className='row'>
                                     <div className='col-6'>
                                         <div class="form-floating mb-3">
-                                            <input type="date" class="form-control" placeholder="Data" name="date"
+                                            <input type="date" class="form-control" placeholder="Data" name="initial_date"
                                                 value={this.state.form.date} onChange={this.formData} />
-                                            <label for="floatingInput">Data</label>
+                                            <label for="floatingInput">Data de Início</label>
                                         </div>
                                     </div>
 
                                     <div className='col-6'>
+                                        <div class="form-floating mb-3">
+                                            <input type="date" class="form-control" placeholder="Data" name="final_date"
+                                                value={this.state.form.date} onChange={this.formData} />
+                                            <label for="floatingInput">Data de Fim</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='row'>
+                                    <div className='col-4'>
+                                        <div key={this.state.form.repeat} class="form-floating">
+                                            <label for="floatingSelect">Deve repetir?</label>
+                                            <input type="radio" name={this.state.form.repeat} value={false}/> Sim
+                                            <input type="radio" name={this.state.form.repeat} value={false}/> Não
+                                        </div>
+                                    </div>
+
+                                    <div className='col-4'>
+                                        <div class="form-floating">
+                                        <select class="form-select" id="floatingSelect" aria-label="Horário" name="hour" value={this.state.form.repeatEvery} onChange={this.formData}>
+                                                {this.state.hoursListOptions}
+                                            </select>
+                                            <label for="floatingSelect">Repetir por...</label>
+                                        </div>
+                                    </div>
+
+                                    <div className='col-4'>
                                         <div class="form-floating">
                                             <select class="form-select" id="floatingSelect" aria-label="Horário" name="hour" value={this.state.form.hour} onChange={this.formData}>
                                                 {this.state.hoursListOptions}
@@ -154,29 +184,29 @@ class NewSchedule extends Component {
                                     </div>
                                 </div>
 
-                                <div className='row schedule-warning'>
+                                {/* <div className='row schedule-warning'>
                                     <div className='col'>
                                         <span> <RiErrorWarningLine /> Este horário não está disponível! </span>
                                     </div>
-                                </div>
+                                </div> */}
 
-                                <div className='row'>
+                                {/* <div className='row'>
                                     <div className='col service-list-section'>
-                                        <label className='service-title'> Selecione os serviços: </label>
+                                        <label className='service-title'> Selecione os serviços: </label> */}
 
                                         {/* <ServiceSelect service="Serviço 1"/>
                                         <ServiceSelect service="Serviço 2"/>
                                         <ServiceSelect service="Serviço 3"/>
                                         <ServiceSelect service="Serviço 4"/> */}
-                                        {this.state.serviceList}
+                                        {/* {this.state.serviceList} */}
 
-                                    </div>
-                                </div>
+                                    {/* </div>
+                                </div> */}
 
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn schedule-button">Concluir Agendamento</button>
+                            <button type="button" onClick={this.addReminder} class="btn btn-outline-primary schedule-button">Adicionar Lembrete</button>
                         </div>
                     </div>
                 </div>
