@@ -5,10 +5,10 @@ import moment from 'moment';
 
 import { AiOutlineLeft } from 'react-icons/ai'
 import { AiOutlineRight } from 'react-icons/ai'
-import Schedule from '../Schedule';
+// import Schedule from '../Schedule';
 import Service from '../ScheduleView/ServiceView';
 import ScheduleView from '../ScheduleView';
-import { FaRegCalendarPlus } from 'react-icons/fa'
+import { FaRegCalendarPlus, FaFileAlt } from 'react-icons/fa'
 import { Modal } from 'bootstrap';
 
 
@@ -194,16 +194,16 @@ class CalendarWeek extends Component {
                     }
 
                     calendarColumn.push(
-                        <Schedule
-                            date={scheduleInfo.date}
-                            initialHour={scheduleInfo.initialHour}
-                            finalHour={scheduleInfo.finalHour}
-                            customer={scheduleInfo.customer}
-                            serviceQuantity={scheduleInfo.services.length}
-                            services={scheduleInfo.services}
-                            available="false"
-                            infos={this.scheduleClick}
-                            index={scheduleInfo.index} />
+                        // <Schedule
+                        //     date={scheduleInfo.date}
+                        //     initialHour={scheduleInfo.initialHour}
+                        //     finalHour={scheduleInfo.finalHour}
+                        //     customer={scheduleInfo.customer}
+                        //     serviceQuantity={scheduleInfo.services.length}
+                        //     services={scheduleInfo.services}
+                        //     available="false"
+                        //     infos={this.scheduleClick}
+                        //     index={scheduleInfo.index} />
                     )
 
                     add = true
@@ -212,9 +212,9 @@ class CalendarWeek extends Component {
             })
 
             // Caso não tenha atendimentos marcados, adiciona um horário vazio
-            if (!add) {
-                calendarColumn.push(<Schedule initialHour={HOURS[i]} finalHour={HOURS[i + 1]} customer="Livre" serviceQuantity="1" />)
-            }
+            // if (!add) {
+            //     calendarColumn.push(<Schedule initialHour={HOURS[i]} finalHour={HOURS[i + 1]} customer="Livre" serviceQuantity="1" />)
+            // }
         }
 
         // Retorna a coluna do dia montada
@@ -333,8 +333,8 @@ class CalendarWeek extends Component {
 
                         <div className='col-xxl-3 col-lg-3 new-schedule'>
                             <button onClick={this.newScheduleClick} className='new-schedule-button'>
-                                <span> <FaRegCalendarPlus color="white" /> </span>
-                                Agendar Horário
+                                <span> <FaFileAlt color="white" /> </span>
+                                Adicionar Lembrete
                             </button>
                         </div>
                     </div>
@@ -401,7 +401,7 @@ class CalendarWeek extends Component {
 
                 </div >
                 {/* {this.state.scheduleInfo} */}
-                <ScheduleView infos={this.state.scheduleInfo} />
+                {/* <ScheduleView infos={this.state.scheduleInfo} /> */}
             </section >
         )
     }
