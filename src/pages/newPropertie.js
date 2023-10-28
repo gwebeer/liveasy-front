@@ -104,7 +104,7 @@ class NewPropertie extends Component {
                     <form>
                         <div className='form-question'>
                             <span className='question-title'>
-                                <label> 1. </label> Você busca um imóvel para compra ou aluguel?
+                                <label> 1. </label> O imóvel está para compra ou aluguel?
                             </span>
 
                             <div className='choice-options'>
@@ -112,14 +112,14 @@ class NewPropertie extends Component {
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="isForRent" id="rent" onChange={this.formData} />
                                     <label class="form-check-label" for="rent">
-                                        Alugar
+                                        Aluguel
                                     </label>
                                 </div>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="isForRent" id="buy" onChange={this.formData} />
                                     <label class="form-check-label" for="buy">
-                                        Comprar
+                                        Compra
                                     </label>
                                 </div>
 
@@ -128,7 +128,7 @@ class NewPropertie extends Component {
 
                         <div className='form-question'>
                             <span className='question-title'>
-                                <label> 2. </label> Qual tipo de imóvel você prefere?
+                                <label> 2. </label> Selecione o tipo do imóvel:
                             </span>
 
                             <div className='choice-options'>
@@ -158,7 +158,7 @@ class NewPropertie extends Component {
 
                         <div className='form-question'>
                             <span className='question-title'>
-                                <label> 3. </label> Você deseja morar em condomínio?
+                                <label> 3. </label> O imóvel está situado em um condomínio?
                             </span>
 
                             <div className='choice-options'>
@@ -182,7 +182,7 @@ class NewPropertie extends Component {
 
                         <div className='form-question'>
                             <span className='question-title'>
-                                <label> 4. </label> Marque as estruturas que gostaria que o condomínio oferecesse:
+                                <label> 4. </label> Marque as estruturas que o condomínio oferece:
                             </span>
 
                             <div className='choice-options'>
@@ -235,7 +235,7 @@ class NewPropertie extends Component {
 
                         <div className='form-question'>
                             <span className='question-title'>
-                                <label> 5. </label> Quantos quartos precisam ter?
+                                <label> 5. </label> Quantos quartos possui o imóvel?
                             </span>
 
                             <div className='choice-options'>
@@ -265,7 +265,7 @@ class NewPropertie extends Component {
 
                         <div className='form-question'>
                             <span className='question-title'>
-                                <label> 6. </label> Quantos banheiros precisam ter?
+                                <label> 6. </label> Quantos banheiros possuem o imóvel?
                             </span>
 
                             <div className='choice-options'>
@@ -295,7 +295,7 @@ class NewPropertie extends Component {
 
                         <div className='form-question'>
                             <span className='question-title'>
-                                <label> 7. </label> Você tem algum veículo?
+                                <label> 7. </label> Quantas vagas de garagem o imóvel possui?
                             </span>
 
                             <div className='choice-options'>
@@ -303,21 +303,21 @@ class NewPropertie extends Component {
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="parkingSpaces" id="no-vehicle" onChange={this.formData} />
                                     <label class="form-check-label" for="no-vehicle">
-                                        Não tenho veículos
+                                        Não possui vagas
                                     </label>
                                 </div>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="parkingSpaces" id="one-vehicle" onChange={this.formData} />
                                     <label class="form-check-label" for="one-vehicle">
-                                        1 veículo
+                                        1 vaga
                                     </label>
                                 </div>
 
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="parkingSpaces" id="more-vehicles" onChange={this.formData} />
                                     <label class="form-check-label" for="more-vehicles">
-                                        + que 1 veículo
+                                        + que 1 vaga
                                     </label>
                                 </div>
                             </div>
@@ -325,7 +325,7 @@ class NewPropertie extends Component {
 
                         <div className='form-question'>
                             <span className='question-title'>
-                                <label> 8. </label> Precisa que o imóvel esteja mobiliado?
+                                <label> 8. </label> O imóvel está mobiliado?
                             </span>
 
                             <div className='choice-options'>
@@ -344,6 +344,34 @@ class NewPropertie extends Component {
                                     </label>
                                 </div>
 
+                            </div>
+                        </div>
+
+                        <div className='form-question'>
+                            <span className='question-title'>
+                                <label> 9. </label> O imóvel possui alguma dessas mobílias?
+                            </span>
+
+                            <div className='choice-options'>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="grill" onChange={this.formData} />
+                                    <label class="form-check-label" for="grill">
+                                        Sofá
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="party-room" onChange={this.formData} />
+                                    <label class="form-check-label" for="party-room">
+                                        Geladeira
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="playroom" onChange={this.formData} />
+                                    <label class="form-check-label" for="playroom">
+                                        Fogão
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
