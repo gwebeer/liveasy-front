@@ -6,6 +6,9 @@ import firebase from '../../../config/firebase.js';
 const HOURS = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
     "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"]
 
+// DAY
+const REPEATERS = ["Semana(s)", "Mês(es)", "Ano(s)"]
+
 class NewSchedule extends Component {
 
     constructor(props) {
@@ -19,7 +22,7 @@ class NewSchedule extends Component {
                 title: "",
                 initial_date: "",
                 final_date: "",
-                repeat: "",
+                repeat: false,
                 repeatEvery: ""
             }
         }
@@ -78,6 +81,17 @@ class NewSchedule extends Component {
         this.setState({ hoursListOptions: hoursList })
     }
 
+    repeatersList() {
+        let repeatList = []
+
+        repeatList.push(<option selected disabled hidden> </option>)
+
+        for (var row = 0; row < 3; row++) {
+            repeatList.push(<option value={REPEATERS[row]}> {REPEATERS[row]} </option>)
+        }
+        this.setState({ repeaterListOptions: repeatList })
+    }
+
     // Monta lista de serviços cadastrados
     serviceList() {
         firebase.firestore().collection("typeServices")
@@ -91,6 +105,15 @@ class NewSchedule extends Component {
             })
     }
 
+    handleRadioChange = (event) => {
+        this.setState({
+            form: {
+                ...this.state.form,
+                repeat: event.target.value,
+            }
+        });
+    };
+
     searchCustomerDatabase() {
         firebase.firestore().collection("customers")
             .where("name", ">", this.state.form.title)
@@ -100,7 +123,7 @@ class NewSchedule extends Component {
                 let lista = []
 
                 snapshot.forEach((doc) => {
-                    if (doc.data().name.indexOf(this.state.form.title) != -1) {
+                    if (doc.data().name.indexOf(this.state.form.title) !== -1) {
                         lista.push(<option value={doc.data().name}>{doc.data().name}</option>)
                     }
                 })
@@ -134,8 +157,6 @@ class NewSchedule extends Component {
                                                 value={this.state.form.title} onChange={this.formData} />   
                                             <label for="floatingInput">Nome do Lembrete</label>
                                         </div>
-
-
                                     </div>
                                 </div>
 
@@ -157,29 +178,50 @@ class NewSchedule extends Component {
                                     </div>
                                 </div>
                                 <div className='row'>
-                                    <div className='col-4'>
-                                        <div key={this.state.form.repeat} class="form-floating">
-                                            <label for="floatingSelect">Deve repetir?</label>
-                                            <input type="radio" name={this.state.form.repeat} value={false}/> Sim
-                                            <input type="radio" name={this.state.form.repeat} value={false}/> Não
+                                    <div className='col-6'>
+                                        <div class="form-floating">
+                                            <select class="form-select" id="floatingSelect" aria-label="Repetir" name="repeat" onChange={this.formData}>
+                                                {this.state.repeatListOptions}
+                                            </select>
+                                            <label for="floatingSelect">Repetir por...</label>
                                         </div>
                                     </div>
-
-                                    <div className='col-4'>
+                                    <div className='col-6'>
                                         <div class="form-floating">
-                                        <select class="form-select" id="floatingSelect" aria-label="Horário" name="hour" value={this.state.form.repeatEvery} onChange={this.formData}>
+                                            <select class="form-select" id="floatingSelect" aria-label="Horário" name="hour" value={this.state.form.repeatEvery} onChange={this.formData}>
                                                 {this.state.hoursListOptions}
                                             </select>
                                             <label for="floatingSelect">Repetir por...</label>
                                         </div>
                                     </div>
 
-                                    <div className='col-4'>
+                                    <div className='col-6'>
                                         <div class="form-floating">
                                             <select class="form-select" id="floatingSelect" aria-label="Horário" name="hour" value={this.state.form.hour} onChange={this.formData}>
                                                 {this.state.hoursListOptions}
                                             </select>
                                             <label for="floatingSelect">Horário</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='row'>
+                                    <div className='col-6'>
+                                        <div class="form-floating">
+                                            <label for="floatingSelect">Deve repetir?</label>
+                                            <input type="radio" 
+                                                    id='YesRadio' 
+                                                    name={this.state.form.repeat} 
+                                                    value={this.state.form.repeat === true} 
+                                                    onChange={this.handleRadioChange}/> Sim
+                                        </div>
+                                    </div>
+                                    <div className='col-6'>
+                                        <div class="form-floating">
+                                            <input type="radio" 
+                                                    id='NoRadio' 
+                                                    name={this.state.form.repeat} 
+                                                    value={this.state.form.repeat === false}
+                                                    onChange={this.handleRadioChange}/> Não
                                         </div>
                                     </div>
                                 </div>
