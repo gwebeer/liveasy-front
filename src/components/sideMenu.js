@@ -55,11 +55,6 @@ class SideMenu extends Component {
                     </li>
 
                     <li className='option'>
-                        <i> <FaTools /> </i>
-                        Preparação
-                    </li>
-
-                    <li className='option'>
                         <i> <BsCalendar2WeekFill /> </i>
                         Calendário
                     </li>
