@@ -134,9 +134,16 @@ class NewSchedule extends Component {
     }
 
     addReminder() {
-        firebase.firestore().collection("CalendarTest")
-            .add(this.state.form);
+        if (this.state.form.title !== "" && this.state.form.initial_date !== "") {
+                firebase.firestore().collection("CalendarTest")
+                    .add(this.state.form);
+        }
+
     }
+
+    // removeReminder() {
+    //     firebase.firestore().collection("CalendarTest").delete()
+    // }
 
     render() {
         return (
