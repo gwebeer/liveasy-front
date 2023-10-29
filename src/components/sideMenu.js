@@ -53,7 +53,7 @@ class SideMenu extends Component {
                         <i> <BsBuildingFillAdd /> </i>
                         Imóveis
                     </li>
-                    <li className='option'>
+                    <li className='option' onClick={() => {window.location = "/calendar"}}>
                         <i> <BsCalendar2WeekFill /> </i>
                         Calendário
                     </li>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ServiceSelect from './ServiceSelect';
 import { RiErrorWarningLine } from 'react-icons/ri'
 import firebase from '../../../config/firebase.js';
+import { InvalidAlert } from '../../../SupportFunctions';
+import { Modal } from 'bootstrap';
 
 const HOURS = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
     "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00"]
@@ -20,53 +22,51 @@ class NewSchedule extends Component {
 
             form: {
                 title: "",
-                initial_date: "",
-                final_date: "",
-                repeat: false,
-                repeatEvery: ""
+                date: "",
+                hour: "teste",
+                duration: ""
             }
         }
 
+        this.newSchedule = this.newSchedule.bind(this);
         this.hoursList = this.hoursList.bind(this);
         this.formData = this.formData.bind(this);
-        this.checkBoxChange = this.checkBoxChange.bind(this);
-        this.serviceList = this.serviceList.bind(this);
-        this.searchCustomerDatabase = this.searchCustomerDatabase.bind(this);
-        this.addReminder = this.addReminder.bind(this);
+        this.radioData = this.radioData.bind(this);
     }
 
     componentDidMount() {
         this.hoursList();
-        this.serviceList();
-        this.searchCustomerDatabase();
     }
 
     // Atualiza state com valores de inputs
     formData(e) {
         let form = this.state.form;
         form[e.target.name] = e.target.value;
-        this.setState({ form: form }, this.searchCustomerDatabase() );
+        this.setState({ form: form });
     }
 
-    // Atualiza state com lista de serviços selecionados
-    checkBoxChange(e) {
-        console.log(e.target.name)
+    // Atualiza state com valores de inputs
+    radioData(e) {
+        let form = this.state.form;
 
-        var serviceList = this.state.form.services
-
-        if (e.target.checked) {
-            serviceList.push(e.target.name)
-        } else {
-            var index = serviceList.indexOf(e.target.name)
-            serviceList.splice(index, 1)
+        let duration;
+        switch (e.target.id) {
+            case '30min':
+                duration = "1"
+                break;
+            case '1h':
+                duration = "2"
+                break;
+            case '1h30':
+                duration = "3"
+                break;
+            case '2h':
+                duration = "4"
+                break;
         }
 
-        this.setState(prevState => {
-            let form = Object.assign({}, prevState.form);
-            form.services = serviceList;
-            return { form };
-        })
-        console.log(serviceList)
+        form['duration'] = duration;
+        this.setState({ form: form }, () => { console.log(this.state.form) });
     }
 
     // Monta lista de horários para selecionar
@@ -81,61 +81,24 @@ class NewSchedule extends Component {
         this.setState({ hoursListOptions: hoursList })
     }
 
-    repeatersList() {
-        let repeatList = []
+    newSchedule() {     
+        let invalid;
 
-        repeatList.push(<option selected disabled hidden> </option>)
+        Object.keys(this.state.form).forEach( (element) => {
+            if (this.state.form[element] == "") {
+                invalid = true
+            }  
+        })
 
-        for (var row = 0; row < 3; row++) {
-            repeatList.push(<option value={REPEATERS[row]}> {REPEATERS[row]} </option>)
+        console.log(this.state.form)
+
+        if (invalid) {
+            InvalidAlert("Campo Inválido!", "É obrigatório preencher todos os campos.")
+            return
         }
-        this.setState({ repeaterListOptions: repeatList })
-    }
 
-    // Monta lista de serviços cadastrados
-    serviceList() {
-        firebase.firestore().collection("typeServices")
-            .get()
-            .then((snapshot) => {
-                let serviceState = []
-                snapshot.forEach((doc) => {
-                    serviceState.push(<ServiceSelect service={doc.data().name} checkBoxChange={this.checkBoxChange} id={doc.data().id} />)
-                })
-                this.setState({ serviceList: serviceState })
-            })
-    }
-
-    handleRadioChange = (event) => {
-        this.setState({
-            form: {
-                ...this.state.form,
-                repeat: event.target.value,
-            }
-        });
-    };
-
-    searchCustomerDatabase() {
-        firebase.firestore().collection("customers")
-            .where("name", ">", this.state.form.title)
-            .orderBy("name", "asc")
-            .get()
-            .then((snapshot) => {
-                let lista = []
-
-                snapshot.forEach((doc) => {
-                    if (doc.data().name.indexOf(this.state.form.title) !== -1) {
-                        lista.push(<option value={doc.data().name}>{doc.data().name}</option>)
-                    }
-                })
-
-                console.log(lista)
-                this.setState({ customerList: lista })
-            })
-    }
-
-    addReminder() {
-        firebase.firestore().collection("CalendarTest")
-            .add(this.state.form);
+        console.log("enviar para o banco de dados")
+        window.location = '/calendar';
     }
 
     render() {
@@ -144,7 +107,7 @@ class NewSchedule extends Component {
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Agendar Atendimento</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Adicionar Lembrete</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -154,7 +117,7 @@ class NewSchedule extends Component {
                                     <div className='col customer-input'>
                                         <div class="form-floating mb-3">
                                             <input type="text" class="form-control" placeholder="Nome do Lembrete" name="title"
-                                                value={this.state.form.title} onChange={this.formData} />   
+                                                value={this.state.form.title} onChange={this.formData} />
                                             <label for="floatingInput">Nome do Lembrete</label>
                                         </div>
                                     </div>
@@ -163,35 +126,9 @@ class NewSchedule extends Component {
                                 <div className='row'>
                                     <div className='col-6'>
                                         <div class="form-floating mb-3">
-                                            <input type="date" class="form-control" placeholder="Data" name="initial_date"
+                                            <input type="date" class="form-control" placeholder="Data" name="date"
                                                 value={this.state.form.date} onChange={this.formData} />
-                                            <label for="floatingInput">Data de Início</label>
-                                        </div>
-                                    </div>
-
-                                    <div className='col-6'>
-                                        <div class="form-floating mb-3">
-                                            <input type="date" class="form-control" placeholder="Data" name="final_date"
-                                                value={this.state.form.date} onChange={this.formData} />
-                                            <label for="floatingInput">Data de Fim</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='row'>
-                                    <div className='col-6'>
-                                        <div class="form-floating">
-                                            <select class="form-select" id="floatingSelect" aria-label="Repetir" name="repeat" onChange={this.formData}>
-                                                {this.state.repeatListOptions}
-                                            </select>
-                                            <label for="floatingSelect">Repetir por...</label>
-                                        </div>
-                                    </div>
-                                    <div className='col-6'>
-                                        <div class="form-floating">
-                                            <select class="form-select" id="floatingSelect" aria-label="Horário" name="hour" value={this.state.form.repeatEvery} onChange={this.formData}>
-                                                {this.state.hoursListOptions}
-                                            </select>
-                                            <label for="floatingSelect">Repetir por...</label>
+                                            <label for="floatingInput">Data</label>
                                         </div>
                                     </div>
 
@@ -204,55 +141,51 @@ class NewSchedule extends Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className='row'>
-                                    <div className='col-6'>
-                                        <div class="form-floating">
-                                            <label for="floatingSelect">Deve repetir?</label>
-                                            <input type="radio" 
-                                                    id='YesRadio' 
-                                                    name={this.state.form.repeat} 
-                                                    value={this.state.form.repeat === true} 
-                                                    onChange={this.handleRadioChange}/> Sim
-                                        </div>
-                                    </div>
-                                    <div className='col-6'>
-                                        <div class="form-floating">
-                                            <input type="radio" 
-                                                    id='NoRadio' 
-                                                    name={this.state.form.repeat} 
-                                                    value={this.state.form.repeat === false}
-                                                    onChange={this.handleRadioChange}/> Não
-                                        </div>
+
+                                <div className='row duration-title'>
+                                    <div className='col-12'>
+                                        Qual a duração na sua agenda?
                                     </div>
                                 </div>
 
-                                {/* <div className='row schedule-warning'>
-                                    <div className='col'>
-                                        <span> <RiErrorWarningLine /> Este horário não está disponível! </span>
+                                <div className='row duration-options'>
+                                    <div className='col-3'>
+                                        <input class="form-check-input" type="radio" name="isCondominium" id="30min" onChange={this.radioData} />
+                                        <label class="form-check-label" for="30min">
+                                            30 min
+                                        </label>
                                     </div>
-                                </div> */}
 
-                                {/* <div className='row'>
-                                    <div className='col service-list-section'>
-                                        <label className='service-title'> Selecione os serviços: </label> */}
+                                    <div className='col-3'>
+                                        <input class="form-check-input" type="radio" name="isCondominium" id="1h" onChange={this.radioData} />
+                                        <label class="form-check-label" for="1h">
+                                            1h
+                                        </label>
+                                    </div>
 
-                                        {/* <ServiceSelect service="Serviço 1"/>
-                                        <ServiceSelect service="Serviço 2"/>
-                                        <ServiceSelect service="Serviço 3"/>
-                                        <ServiceSelect service="Serviço 4"/> */}
-                                        {/* {this.state.serviceList} */}
+                                    <div className='col-3'>
+                                        <input class="form-check-input" type="radio" name="isCondominium" id="1h30" onChange={this.radioData} />
+                                        <label class="form-check-label" for="1h30">
+                                            1h 30
+                                        </label>
+                                    </div>
 
-                                    {/* </div>
-                                </div> */}
+                                    <div className='col-3'>
+                                        <input class="form-check-input" type="radio" name="isCondominium" id="2h" onChange={this.radioData} />
+                                        <label class="form-check-label" for="2h">
+                                            2h
+                                        </label>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" onClick={this.addReminder} class="btn btn-outline-primary schedule-button">Adicionar Lembrete</button>
+                            <button type="button" onClick={this.newSchedule} class="btn btn-outline-primary schedule-button">Adicionar Lembrete</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
