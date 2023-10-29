@@ -19,6 +19,7 @@
         }
     }
 
+
     .nav-tabs {
         // background-color: #219EBC;
         // border-bottom: #023047 1px solid;
@@ -72,11 +73,12 @@
                         font-size: 15px;
                         background-color: #f4fbff;
                     }
+
                     .hide-input {
                         background-color: #ffffff00;
                         border: none;
                     }
-                    
+
                     @include res-lg {
                         margin: 10px 0;
                     }
@@ -85,7 +87,7 @@
                         margin: 5px 0;
                         width: 85%;
                     }
-                    
+
                 }
 
                 #signup-bt {
@@ -140,6 +142,7 @@
                         font-size: 15px;
                         background-color: #f4fbff;
                     }
+
                     .hide-input {
                         background-color: #ffffff00;
                         border: none;
@@ -165,7 +168,7 @@
                     }
                 }
 
-                
+
 
                 .access-buttons {
                     display: flex;
@@ -207,7 +210,7 @@
                     }
                 }
 
-                
+
             }
         }
 

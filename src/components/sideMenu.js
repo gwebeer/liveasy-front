@@ -53,7 +53,6 @@ class SideMenu extends Component {
                         <i> <BsBuildingFillAdd /> </i>
                         Imóveis
                     </li>
-
                     <li className='option'>
                         <i> <BsCalendar2WeekFill /> </i>
                         Calendário
