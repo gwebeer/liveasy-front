@@ -23,7 +23,7 @@ class NewSchedule extends Component {
             form: {
                 title: "",
                 date: "",
-                hour: "teste",
+                hour: "",
                 duration: ""
             }
         }
