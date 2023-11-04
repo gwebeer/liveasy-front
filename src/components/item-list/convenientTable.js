@@ -17,14 +17,16 @@ class ConvenientTable extends Component {
 
         let rows = []
         Object.keys(items).forEach((key) => {
-            // console.log(items[key]['title'])
             rows.push(
                 <ItemRow
                     title={items[key]['title']}
+                    convenient={items[key]['convenient']}
                     category={items[key]['category']}
                     priority={items[key]['priority']}
                     value={items[key]['value']}
+                    bought={items[key]['bought']}
                     boughtDate={items[key]['boughtDate']}
+                    id={items[key]['_id']}
                 />
             )
 
@@ -46,7 +48,7 @@ class ConvenientTable extends Component {
                             <th className="value-column"> Valor </th>
                             <th className="bought-column"> Comprado </th>
                             <th className="bought-date-column"> Data de Compra </th>
-                            <th className="edit-column"> Editar </th>
+                            <th className="edit-column"> Opções </th>
                         </tr>
                     </thead>
                     <tbody>

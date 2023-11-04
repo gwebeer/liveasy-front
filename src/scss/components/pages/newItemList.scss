@@ -39,7 +39,7 @@
             cursor: pointer;
             margin: 20px 10px;
             padding: 5px 20px;
-    
+
             &:hover {
                 background-color: #FB8500;
             }
@@ -66,7 +66,7 @@
             thead {
                 background-color: #023047;
                 color: #8ECAE6;
-                
+
                 th {
                     padding: 7px 0;
                     // border: 1px solid red;
@@ -76,26 +76,32 @@
                     text-align: center;
                     width: 20%;
                 }
+
                 .category-column {
                     text-align: center;
                     width: 20%;
                 }
+
                 .priority-column {
                     text-align: center;
                     width: 13%;
                 }
+
                 .value-column {
                     text-align: center;
                     width: 12%;
                 }
+
                 .bought-column {
                     text-align: center;
-                    width: 12%;
+                    width: 8%;
                 }
+
                 .bought-date-column {
                     text-align: center;
-                    width: 200px;
+                    width: 25%;
                 }
+
                 .edit-column {
                     width: 10%;
                     text-align: center;
@@ -103,12 +109,20 @@
             }
 
             td {
-                text-align: center;
                 border-bottom: 1px solid #023047;
-                padding: 7px 0;
-                font-size: 15px;
+                text-align: center;
+                padding: 5px 0;
+
+                input {
+                    // background-color: #219EBC;
+                    padding: 5px 0;
+                    font-size: 15px;
+                    text-align: center;
+                    margin: 0 5px;
+
+                }
             }
         }
-        
+
     }
 }
