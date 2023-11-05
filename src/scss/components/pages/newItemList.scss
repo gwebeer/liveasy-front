@@ -54,6 +54,7 @@
 
     .item-list-table {
         // margin-top: 10px;
+        overflow: hidden;
 
         .convenient-table {
             margin-bottom: 35px;
@@ -80,37 +81,38 @@
 
                 .item-column {
                     text-align: center;
-                    width: 20%;
+                    // width: 20%;
                 }
 
                 .category-column {
                     text-align: center;
-                    width: 20%;
+                    // width: 20%;
                 }
 
                 .priority-column {
                     text-align: center;
-                    width: 13%;
+                    // width: 5%;
                 }
 
                 .value-column {
                     text-align: center;
-                    width: 12%;
+                    // width: 10%;
                 }
 
                 .bought-column {
                     text-align: center;
-                    width: 8%;
+                    width: 5%;
                 }
 
                 .bought-date-column {
                     text-align: center;
-                    width: 25%;
+                    // width: 25%;
                 }
 
                 .edit-column {
-                    width: 10%;
+                    width: 13%;
                     text-align: center;
+                    padding-right: 10px;
                 }
             }
 
@@ -118,6 +120,7 @@
                 border-bottom: 1px solid #023047;
                 text-align: center;
                 padding: 5px 0;
+                color: #023047;
 
                 input {
                     // background-color: #219EBC;
@@ -125,7 +128,12 @@
                     font-size: 15px;
                     text-align: center;
                     margin: 0 5px;
+                    // font-weight: 600;
+                }
 
+                button {
+                    color: #023047;
+                    margin: 0 4px;
                 }
             }
         }
