@@ -78,7 +78,7 @@ class ItemRow extends Component {
     }
     async confirmDelete() {
         this.setState({ confirmDelete: true })
-        await new Promise(r => setTimeout(r, 5000));
+        await new Promise(r => setTimeout(r, 2000));
         this.setState({ confirmDelete: false })
     }
 
