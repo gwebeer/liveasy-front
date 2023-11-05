@@ -8,7 +8,8 @@ import { AiFillPlusCircle } from 'react-icons/ai';
 import NewItem from '../components/newItem';
 import { BiTrash } from 'react-icons/bi'
 import ConvenientTable from '../components/item-list/convenientTable';
-
+import SuggestionItems from '../components/item-list/suggestionItem';
+import { TbShoppingBagSearch } from 'react-icons/tb';
 
 
 class NewItemList extends Component {
@@ -22,24 +23,24 @@ class NewItemList extends Component {
     async componentDidMount() {
         let items = await getItemList(localStorage.getItem('processId'))
         console.log(items)
-        
+
         let convenients = []
-        Object.values(items).forEach( (value) => {
+        Object.values(items).forEach((value) => {
             if (convenients.indexOf(value.convenient) == -1) {
                 convenients.push(value.convenient)
             }
         })
 
         let tables = []
-        convenients.forEach( (convenient) => {
+        convenients.forEach((convenient) => {
             let convenientItems = []
-            Object.values(items).forEach( (item) => {
-                if( item['convenient'] == convenient) {
+            Object.values(items).forEach((item) => {
+                if (item['convenient'] == convenient) {
                     convenientItems.push(item)
                 }
             })
 
-            tables.push(<ConvenientTable convenient={convenient} items={convenientItems}/>)
+            tables.push(<ConvenientTable convenient={convenient} items={convenientItems} />)
         })
         this.setState({ convenientTables: tables })
     }
@@ -53,6 +54,7 @@ class NewItemList extends Component {
             <div className='home-page'>
                 <SideMenu />
                 <NewItem />
+                <SuggestionItems />
 
                 <div className='item-list-page'>
                     <div className='page-title'>
@@ -63,12 +65,12 @@ class NewItemList extends Component {
 
                     <section className='add-buttons'>
                         <button className='new-item-btn' type="button" data-bs-toggle="offcanvas" data-bs-target="#new-item-offcanvas" aria-controls="new-item">
-                            <AiFillPlusCircle />
+                            <i> <AiFillPlusCircle /> </i>
                             Adicionar Item
                         </button>
 
-                        <button className='new-item-btn' type="button" data-bs-toggle="offcanvas" data-bs-target="#new-item-offcanvas" aria-controls="new-item">
-                            <AiFillPlusCircle />
+                        <button className='suggestion-item-btn' type="button" data-bs-toggle="offcanvas" data-bs-target="#suggestion-item-offcanvas" aria-controls="suggestion-item">
+                            <i> <TbShoppingBagSearch /> </i>
                             Sugestões de Itens
                         </button>
                     </section>

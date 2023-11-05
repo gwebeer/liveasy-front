@@ -49,16 +49,17 @@ class ItemRow extends Component {
         if (newViewMode) {
             let newInfo = this.state.form
             newInfo['id'] = this.props.id
-            console.log(newInfo)
 
-            let updateItem = await api.put('/user/list/item')
+            let updateItem = await api.put('/user/list/item', newInfo)
                 .then((response) => {
                     SuccessAlert("Dados Atualizados", "O item foi atualizado!")
+                    console.log(response)
                 })
                 .catch((error) => {
                     InvalidAlert("Houve um erro!", "Houve um erro ao atualizar o item.")
                     console.log(error)
                 })
+
         }
 
         this.setState({ viewMode: newViewMode })

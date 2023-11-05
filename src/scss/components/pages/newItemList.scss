@@ -1,8 +1,14 @@
+// .home-page {
+//     height: auto;
+// }
 .item-list-page {
     width: 85%;
     padding: 25px 40px;
+    padding-bottom: 0;
     display: flex;
     flex-direction: column;
+    align-self: start;
+    overflow: auto;
 
     .page-title {
         display: flex;
@@ -25,7 +31,7 @@
         display: flex;
         flex-direction: row;
 
-        .new-item-btn {
+        button {
             height: 35px;
             justify-content: center;
             display: block;
