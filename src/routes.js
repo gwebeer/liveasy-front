@@ -24,8 +24,7 @@ const Rotas = () => {
                 <Route path='/profile' element={<Profile/>}>  </Route>
                 <Route path='/properties' element={<PropertiesPage />}>  </Route>
                 <Route path='/ideal-propertie' element={<IdealPropertie />}>  </Route>
-                <Route path='/item-list' element={<ItemList/>}> </Route>
-                <Route path='/new-item-list' element={<NewItemList/>}> </Route>
+                <Route path='/item-list' element={<NewItemList />}> </Route>
                 <Route path='/coast-list' element={<CoastList/>}> </Route>
                 <Route path='/calendar' element={<Calendar/>}> </Route>
                 <Route path='/suggestion' element={<SuggestionList/>}> </Route>
