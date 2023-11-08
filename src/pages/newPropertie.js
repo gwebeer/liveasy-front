@@ -10,80 +10,95 @@ class NewPropertie extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            idealPropertieForm: {
-                id: localStorage.getItem('userId'),
+            propertieForm: {
+                user: localStorage.getItem('userId'),
                 isForRent: "",
-                propertyType: "",
+                type: "",
                 isCondominium: "",
                 rooms: "",
                 bathrooms: "",
                 parkingSpaces: "",
-                isFurnished: "",
-                infraestructure: []
-            }
-
+                furnished: "empty",
+                infraestructure: [],
+                forniture: [],
+                name: "",
+                value: ""
+            },
+            furnish: []
         }
 
-        this.formData = this.formData.bind(this);
-        this.idealPropertieRegister = this.idealPropertieRegister.bind(this);
+        this.form = this.form.bind(this);
+        this.addPropertie = this.addPropertie.bind(this);
     }
 
     async componentDidMount() {
+        let notBoughtItems = await api.get('user/list/item/not-bought/' + localStorage.getItem('processId'))
 
+        let itemsElements = []
+        Object.values(await notBoughtItems.data).forEach((item) => {
+            itemsElements.push(
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="forniture" id={item.title} onChange={this.form} />
+                    <label class="form-check-label" for={item.title}>
+                        {item.title}
+                    </label>
+                </div>
+            )
+        })
+        this.setState({ furnish: itemsElements })
     }
 
-    async formData(e) {
-        if (e.target.name === 'infraestructure') {
-            let newState = this.state.idealPropertieForm
+    async form(e) {
+        let newState = this.state.propertieForm
 
+        let field = e.target.name
+        let value = e.target.id
+
+        let fornitures = Object.values(newState.forniture)
+        if (field == "forniture") {
             if (e.target.checked) {
-                newState['infraestructure'].push(e.target.id)
+                fornitures.push(value)
             } else {
-                let index = newState['infraestructure'].indexOf(e.target.id)
-                newState['infraestructure'].splice(index, 1)
+                let index = fornitures.indexOf(value)
+                fornitures.splice(index, 1)
             }
-            this.setState({ idealPropertieForm: newState })
-            return
+            newState.forniture = fornitures
         }
 
-        let newState = this.state.idealPropertieForm
-        newState[e.target.name] = e.target.id
-        this.setState({ idealPropertieForm: newState })
+        let infraestructures = Object.values(newState.infraestructure)
+        if (field == "infraestructure") {
+            if (e.target.checked) {
+                infraestructures.push(value)
+            } else {
+                let index = infraestructures.indexOf(value)
+                infraestructures.splice(index, 1)
+            }
+            newState.infraestructure = infraestructures
+        }
+
+        if (field === "textFields") {
+            newState[e.target.id] = e.target.value
+        }
+
+        if (field !== "forniture" && field !== "infraestructure" && field !== "textFields") {
+            newState[field] = value
+        }
+
+        this.setState({ propertieForm: newState })
     }
-    async idealPropertieRegister(e) {
+
+    async addPropertie(e) {
         e.preventDefault();
 
-        let fieldValidation = await idealPropertieValidation(this.state.idealPropertieForm)
-
-        if (fieldValidation.length > 0) {
-            InvalidAlert("Preenchimento Inválido!", "Você não respondeu a pergunta " + fieldValidation[0] + ".")
-            return
-        }
-
-        let requestBody = {
-            user: this.state.idealPropertieForm.id,
-            isForRent: this.state.idealPropertieForm.isForRent == "rent" ? true : false,
-            propertyType: this.state.idealPropertieForm.propertyType,
-            rooms: this.state.idealPropertieForm.rooms,
-            bathrooms: this.state.idealPropertieForm.bathrooms,
-            parkingSpaces: this.state.idealPropertieForm.parkingSpaces,
-            infraestructure: this.state.idealPropertieForm.infraestructure,
-            isFurnished: this.state.idealPropertieForm.isFurnished == "furnished" ? true : false,
-            isCondominium: this.state.idealPropertieForm.isCondominium == "condominium" ? true : false
-        }
-
-        console.log(requestBody)
-        // Registra usuário no banco de dados
-        api.post('/user/property/add', requestBody)
+        await api.post('/property/add', this.state.propertieForm)
             .then((response) => {
-                SuccessAlert("Cadastro Realizado", "Preferências cadastradas! Você pode alterar elas através do meu perfil.")
-                window.location = 'http://localhost:3000/properties'
+                window.location = '/properties'
             })
             .catch((error) => {
-                InvalidAlert("Preenchimento Inválido!", error.response.data.error)
+                InvalidAlert("Erro ao adicionar", "Houve um erro ao adicionar o imóvel, tente novamente!")
+                console.log(error)
             })
     }
-
 
     render() {
         if (!localStorage.getItem('token')) {
@@ -94,7 +109,7 @@ class NewPropertie extends Component {
             <div className='home-page'>
                 <SideMenu />
 
-                <div className='ideal-properties-page'>
+                <div className='new-propertie-page'>
                     <div className='page-title'>
                         <i> <BsFillHouseHeartFill /> </i>
                         <h1> Cadastro de Imóvel </h1>
@@ -102,6 +117,18 @@ class NewPropertie extends Component {
                     <p className='page-description'> Cadastre as informações do imóvel que você gostou. </p>
 
                     <form>
+                        <div className="form-floating data-input">
+                            <input type="text" className="form-control" id="name" placeholder="name@example.com"
+                                name="textFields" value={this.state.propertieForm.name} onChange={this.form} />
+                            <label htmlFor="floatingInput"> Dê um nome ao imóvel: </label>
+                        </div>
+
+                        <div className="form-floating data-input">
+                            <input type="text" className="form-control" id="value" placeholder="name@example.com"
+                                name="textFields" value={this.state.propertieForm.value} onChange={this.form} />
+                            <label htmlFor="floatingInput"> Qual o valor do imóvel? </label>
+                        </div>
+
                         <div className='form-question'>
                             <span className='question-title'>
                                 <label> 1. </label> O imóvel está para compra ou aluguel?
@@ -110,14 +137,14 @@ class NewPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="isForRent" id="rent" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="isForRent" id="rent" onChange={this.form} />
                                     <label class="form-check-label" for="rent">
                                         Aluguel
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="isForRent" id="buy" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="isForRent" id="buy" onChange={this.form} />
                                     <label class="form-check-label" for="buy">
                                         Compra
                                     </label>
@@ -134,21 +161,21 @@ class NewPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="propertyType" id="apartament" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="type" id="apartament" onChange={this.form} />
                                     <label class="form-check-label" for="apartament">
                                         Apartamento
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="propertyType" id="house" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="type" id="house" onChange={this.form} />
                                     <label class="form-check-label" for="house">
                                         Casa
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="propertyType" id="loft" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="type" id="loft" onChange={this.form} />
                                     <label class="form-check-label" for="loft">
                                         Sobrado
                                     </label>
@@ -164,14 +191,14 @@ class NewPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="isCondominium" id="condominium" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="isCondominium" id="condominium" onChange={this.form} />
                                     <label class="form-check-label" for="condominium">
                                         Sim
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="isCondominium" id="street" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="isCondominium" id="street" onChange={this.form} />
                                     <label class="form-check-label" for="street">
                                         Não
                                     </label>
@@ -188,43 +215,43 @@ class NewPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="grill" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="grill" onChange={this.form} />
                                     <label class="form-check-label" for="grill">
                                         Churrasqueira
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="party-room" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="party-room" onChange={this.form} />
                                     <label class="form-check-label" for="party-room">
                                         Salão de Festas
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="playroom" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="playroom" onChange={this.form} />
                                     <label class="form-check-label" for="playroom">
                                         Salão de Jogos
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="gym" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="gym" onChange={this.form} />
                                     <label class="form-check-label" for="gym">
                                         Academia
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="pool" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="pool" onChange={this.form} />
                                     <label class="form-check-label" for="pool">
                                         Piscina
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="laundry" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="laundry" onChange={this.form} />
                                     <label class="form-check-label" for="laundry">
                                         Lavanderia Compartilhada
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="steam-room" onChange={this.formData} />
+                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="steam-room" onChange={this.form} />
                                     <label class="form-check-label" for="steam-room">
                                         Sauna
                                     </label>
@@ -241,21 +268,21 @@ class NewPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="rooms" id="one-room" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="rooms" id="one-room" onChange={this.form} />
                                     <label class="form-check-label" for="one-room">
                                         1 quarto
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="rooms" id="two-rooms" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="rooms" id="two-rooms" onChange={this.form} />
                                     <label class="form-check-label" for="two-rooms">
                                         2 quartos
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="rooms" id="more-rooms" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="rooms" id="more-rooms" onChange={this.form} />
                                     <label class="form-check-label" for="more-rooms">
                                         3 ou + quartos
                                     </label>
@@ -271,21 +298,21 @@ class NewPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="bathrooms" id="one-bathroom" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="bathrooms" id="one-bathroom" onChange={this.form} />
                                     <label class="form-check-label" for="one-bathroom">
                                         1 banheiro
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="bathrooms" id="two-bathrooms" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="bathrooms" id="two-bathrooms" onChange={this.form} />
                                     <label class="form-check-label" for="two-bathrooms">
                                         2 banheiros
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="bathrooms" id="more-bathrooms" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="bathrooms" id="more-bathrooms" onChange={this.form} />
                                     <label class="form-check-label" for="more-bathrooms">
                                         3 ou + banheiros
                                     </label>
@@ -301,21 +328,21 @@ class NewPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="parkingSpaces" id="no-vehicle" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="parkingSpaces" id="no-vehicle" onChange={this.form} />
                                     <label class="form-check-label" for="no-vehicle">
                                         Não possui vagas
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="parkingSpaces" id="one-vehicle" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="parkingSpaces" id="one-vehicle" onChange={this.form} />
                                     <label class="form-check-label" for="one-vehicle">
                                         1 vaga
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="parkingSpaces" id="more-vehicles" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="parkingSpaces" id="more-vehicles" onChange={this.form} />
                                     <label class="form-check-label" for="more-vehicles">
                                         + que 1 vaga
                                     </label>
@@ -331,14 +358,14 @@ class NewPropertie extends Component {
                             <div className='choice-options'>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="furnished" id="furnished" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="furnished" id="furnished" onChange={this.form} />
                                     <label class="form-check-label" for="furnished">
                                         Sim
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="furnished" id="empty" onChange={this.formData} />
+                                    <input class="form-check-input" type="radio" name="furnished" id="empty" onChange={this.form} />
                                     <label class="form-check-label" for="empty">
                                         Não
                                     </label>
@@ -347,35 +374,20 @@ class NewPropertie extends Component {
                             </div>
                         </div>
 
-                        <div className='form-question'>
-                            <span className='question-title'>
-                                <label> 9. </label> O imóvel possui alguma dessas mobílias?
-                            </span>
+                        {this.state.propertieForm.furnished == "empty" ? '' :
+                            <div className='form-question'>
+                                <span className='question-title'>
+                                    <label> 9. </label> O imóvel possui alguma dessas mobílias?
+                                </span>
 
-                            <div className='choice-options'>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="grill" onChange={this.formData} />
-                                    <label class="form-check-label" for="grill">
-                                        Sofá
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="party-room" onChange={this.formData} />
-                                    <label class="form-check-label" for="party-room">
-                                        Geladeira
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="infraestructure" id="playroom" onChange={this.formData} />
-                                    <label class="form-check-label" for="playroom">
-                                        Fogão
-                                    </label>
+                                <div className='choice-options'>
+                                    {this.state.furnish}
                                 </div>
                             </div>
-                        </div>
+                        }
 
-                        <button onClick={this.idealPropertieRegister}> Enviar respostas </button>
+
+                        <button onClick={this.addPropertie}> Enviar respostas </button>
                     </form>
 
                 </div>
