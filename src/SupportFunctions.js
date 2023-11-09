@@ -421,6 +421,17 @@ export async function idealPropertieValidation(propertieInfo) {
 }
 
 
+export async function getItems(processId) {
+    const items = await api.get('/user/list/item/' + processId)
+    .then( (response) => {
+        return response.data
+    })
+
+    return items
+}
+
+
+
 // 200 deu certo
 // 400 id inválido
 // id não existe no banco
