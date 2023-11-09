@@ -48,6 +48,7 @@ class PropertiesPage extends Component {
                 return
             } else {
                 let infos = {
+                    id: propertie._id,
                     title: propertie.name,
                     rooms: propertie.rooms == "one-room" ? "1" : propertie.rooms == "two-rooms" ? "2" : "3+",
                     bathrooms: propertie.bathrooms == "one-bathroom" ? "1" : propertie.bathrooms == "two-bathrooms" ? "2" : "3+",
@@ -65,6 +66,7 @@ class PropertiesPage extends Component {
 
                 propertieElements.push(
                     < PropertieCard
+                        id={infos.id}
                         title={infos.title}
                         rooms={infos.rooms}
                         bathrooms={infos.bathrooms}
