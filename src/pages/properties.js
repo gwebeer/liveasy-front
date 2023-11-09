@@ -35,43 +35,45 @@ class PropertiesPage extends Component {
 
         let propertieElements = []        
         Object.values(properties.data).forEach((propertie) => {
-            let infos = {
-                title: propertie.name,
-                rooms: propertie.rooms == "one-room" ? "1": propertie.rooms == "two-rooms" ? "2": "3+",
-                bathrooms: propertie.bathrooms == "one-bathroom" ? "1": propertie.bathrooms == "two-bathrooms" ? "2": "3+",
-                parkingSpaces: propertie.parkingSpaces == "one-vehicle" ? "1": propertie.parkingSpaces == "more-vehicles" ? "2+": "0",
-                value: propertie.value,
-                infrastructure: Object.values(propertie.infraestructure).length == 0 ? false: true,
-                grill: Object.values(propertie.infraestructure).indexOf("grill") == -1 ? false : true,
-                party: Object.values(propertie.infraestructure).indexOf("party-room") == -1 ? false : true,
-                game: Object.values(propertie.infraestructure).indexOf("playroom") == -1 ? false : true,
-                gym: Object.values(propertie.infraestructure).indexOf("gym") == -1 ? false : true,
-                pool: Object.values(propertie.infraestructure).indexOf("pool") == -1 ? false : true,
-                loundry: Object.values(propertie.infraestructure).indexOf("laundry") == -1 ? false : true,
-                steam: Object.values(propertie.infraestructure).indexOf("steam-room") == -1 ? false : true,
+            if (propertie.user !== localStorage.getItem('userId')) {
+                return
+            } else {
+                let infos = {
+                    title: propertie.name,
+                    rooms: propertie.rooms == "one-room" ? "1": propertie.rooms == "two-rooms" ? "2": "3+",
+                    bathrooms: propertie.bathrooms == "one-bathroom" ? "1": propertie.bathrooms == "two-bathrooms" ? "2": "3+",
+                    parkingSpaces: propertie.parkingSpaces == "one-vehicle" ? "1": propertie.parkingSpaces == "more-vehicles" ? "2+": "0",
+                    value: propertie.value,
+                    infrastructure: Object.values(propertie.infraestructure).length == 0 ? false: true,
+                    grill: Object.values(propertie.infraestructure).indexOf("grill") == -1 ? false : true,
+                    party: Object.values(propertie.infraestructure).indexOf("party-room") == -1 ? false : true,
+                    game: Object.values(propertie.infraestructure).indexOf("playroom") == -1 ? false : true,
+                    gym: Object.values(propertie.infraestructure).indexOf("gym") == -1 ? false : true,
+                    pool: Object.values(propertie.infraestructure).indexOf("pool") == -1 ? false : true,
+                    loundry: Object.values(propertie.infraestructure).indexOf("laundry") == -1 ? false : true,
+                    steam: Object.values(propertie.infraestructure).indexOf("steam-room") == -1 ? false : true,
+                }
+
+                propertieElements.push(
+                    < PropertieCard
+                        title={infos.title}
+                        rooms={infos.rooms}
+                        bathrooms={infos.bathrooms}
+                        parkingSpaces={infos.parkingSpaces}
+                        value={infos.value}
+                        infrastructure={infos.infrastructure}
+                        grill={infos.grill}
+                        party={infos.party}
+                        game={infos.game}
+                        gym={infos.gym}
+                        pool={infos.pool}
+                        loundry={infos.loundry}
+                        steam={infos.steam}
+                    />
+                )
             }
-
-            console.log(propertie)
-
-            propertieElements.push(
-                < PropertieCard
-                    title={infos.title}
-                    rooms={infos.rooms}
-                    bathrooms={infos.bathrooms}
-                    parkingSpaces={infos.parkingSpaces}
-                    value={infos.value}
-                    infrastructure={infos.infrastructure}
-                    grill={infos.grill}
-                    party={infos.party}
-                    game={infos.game}
-                    gym={infos.gym}
-                    pool={infos.pool}
-                    loundry={infos.loundry}
-                    steam={infos.steam}
-                />
-            )
         })
-        if (propertieElements.length < 0) {
+        if (propertieElements.length === 0) {
             propertieElements.push(
                 <label className='not-propertie'> Você ainda não tem nenhum imóvel cadastrado! </label>
             )
