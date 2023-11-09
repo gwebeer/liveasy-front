@@ -8,7 +8,7 @@ import ItemList from "./pages/itemList.js";
 import CoastList from "./pages/coastList.js";
 import PropertiesPage from "./pages/properties.js";
 import IdealPropertie from "./pages/idealPropertie.js";
-import Calendar from "./pages/Calendar/index.js";
+import Calendar from "./pages/calendar.js";
 import NewItemList from "./pages/ItemListNew.js";
 import SuggestionList from "./components/seggestion.js";
 import NewPropertie from "./pages/newPropertie.js";

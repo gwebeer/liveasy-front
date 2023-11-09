@@ -1,0 +1,37 @@
+.duration-title {
+    font-size: 14px;
+    color: rgb(141, 141, 141);
+    padding-left: 5px;
+    margin-bottom: 10px;
+}
+
+.duration-options {
+
+    label {
+        padding-left: 7px;
+        padding-top: 2px;
+    }
+}
+
+.modal-footer {
+    button {
+        justify-content: center;
+        display: block;
+        color: #023047;
+        background-color: #219EBC;
+        font-size: 15px;
+        font-weight: bold;
+        outline: none;
+        border-radius: 10px;
+        transition: .2s ease-in;
+        cursor: pointer;
+        margin: 0px 5px 5px 10px;
+        border: none;
+        padding: 7px 15px;
+
+        &:hover {
+            background-color: #FB8500;
+            color: #023047;
+        }
+    }
+}
