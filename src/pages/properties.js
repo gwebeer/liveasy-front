@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import SideMenu from '../components/sideMenu';
 import api from '../config/api';
-import { BsBuildingFillAdd } from 'react-icons/bs';
-import { FaUserCog } from 'react-icons/fa';
+import { BsBuildingFillAdd, BsFillCarFrontFill } from 'react-icons/bs';
+import { BiSolidBed, BiSolidParty } from 'react-icons/bi';
+import { FaUserCog, FaToilet, FaSwimmingPool } from 'react-icons/fa';
+import { GiWashingMachine } from 'react-icons/gi';
+import { MdOutdoorGrill } from 'react-icons/md';
+import { LiaGrinBeamSweat } from 'react-icons/lia';
+import { CgGym } from 'react-icons/cg';
+import { RiBilliardsFill } from 'react-icons/ri';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { getIdealProperty, idealPropertieValidation } from '../SupportFunctions';
+import PropertieCard from '../components/propertieCard';
 
 
 class PropertiesPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            idealPropertyModal: true
+            idealPropertyModal: true,
+            propertieElements: []
         }
 
     }
@@ -22,6 +30,49 @@ class PropertiesPage extends Component {
         if (idealPropertyRegister === "O ID não foi encontrado na base") {
             this.setState({ idealPropertyModal: false })
         }
+
+        let properties = await api.get('/property/all')
+
+        let propertieElements = []
+        Object.values(properties.data).forEach((propertie) => {
+            let infos = {
+                title: propertie.name,
+                rooms: propertie.rooms == "one-room" ? "1": propertie.rooms == "two-rooms" ? "2": "3+",
+                bathrooms: propertie.bathrooms == "one-bathroom" ? "1": propertie.bathrooms == "two-bathrooms" ? "2": "3+",
+                parkingSpaces: propertie.parkingSpaces == "one-vehicle" ? "1": propertie.parkingSpaces == "more-vehicles" ? "2+": "0",
+                value: propertie.value,
+                infrastructure: Object.values(propertie.infraestructure).length == 0 ? false: true,
+                grill: Object.values(propertie.infraestructure).indexOf("grill") == -1 ? false : true,
+                party: Object.values(propertie.infraestructure).indexOf("party-room") == -1 ? false : true,
+                game: Object.values(propertie.infraestructure).indexOf("playroom") == -1 ? false : true,
+                gym: Object.values(propertie.infraestructure).indexOf("gym") == -1 ? false : true,
+                pool: Object.values(propertie.infraestructure).indexOf("pool") == -1 ? false : true,
+                loundry: Object.values(propertie.infraestructure).indexOf("laundry") == -1 ? false : true,
+                steam: Object.values(propertie.infraestructure).indexOf("steam-room") == -1 ? false : true,
+            }
+
+            console.log(propertie)
+
+            propertieElements.push(
+                < PropertieCard
+                    title={infos.title}
+                    rooms={infos.rooms}
+                    bathrooms={infos.bathrooms}
+                    parkingSpaces={infos.parkingSpaces}
+                    value={infos.value}
+                    infrastructure={infos.infrastructure}
+                    grill={infos.grill}
+                    party={infos.party}
+                    game={infos.game}
+                    gym={infos.gym}
+                    pool={infos.pool}
+                    loundry={infos.loundry}
+                    steam={infos.steam}
+                />
+            )
+        })
+        this.setState({ propertieElements: propertieElements})
+
     }
 
     render() {
@@ -73,9 +124,10 @@ class PropertiesPage extends Component {
 
                     </section>
 
-                    <section>
+                    <section className='properties-list'>
                         <div className="tab-pane fade show active" id="properties-tab" role="tabpanel" aria-labelledby="properties-tab">
-                            teste
+
+                            {this.state.propertieElements}
 
                         </div>
 
