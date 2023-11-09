@@ -229,10 +229,6 @@ class Profile extends Component {
                             <button className="nav-link" id="nav-access-tab" data-bs-toggle="tab" data-bs-target="#nav-access" type="button" role="tab" aria-controls="nav-access" aria-selected="false">
                                 Acesso
                             </button>
-
-                            <button className="nav-link" id="nav-properties-tab" data-bs-toggle="tab" data-bs-target="#nav-properties" type="button" role="tab" aria-controls="nav-properties" aria-selected="false">
-                                Preferência de Imóveis
-                            </button>
                         </div>
                     </nav>
 

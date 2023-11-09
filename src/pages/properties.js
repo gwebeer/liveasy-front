@@ -19,7 +19,8 @@ class PropertiesPage extends Component {
         super(props);
         this.state = {
             idealPropertyModal: true,
-            propertieElements: []
+            propertieElements: [],
+            rankElements: [],
         }
 
     }
@@ -34,7 +35,6 @@ class PropertiesPage extends Component {
         let items = await getItemList(localStorage.getItem('processId'))
         let notBought = []
         Object.values(items).forEach((value) => {
-            console.log(value)
             if (!value.bought) {
                 notBought.push(value.title)
             }
@@ -95,6 +95,7 @@ class PropertiesPage extends Component {
             )
         }
         this.setState({ propertieElements: propertieElements })
+        await this.rankMount()
 
     }
 
@@ -179,13 +180,60 @@ class PropertiesPage extends Component {
         })
 
         let putInfo = {
-            user: localStorage.getItem('userId'),
+            id: propertie._id,
             score: score
         }
 
-        // console.log("Aqui")
-        // let rank = await api.put('/property', putInfo)
-        // console.log(rank)
+        let rank = await api.put('/property', putInfo)
+    }
+
+    async rankMount() {
+        let properties = await api.get('/property/score/' + localStorage.getItem('userId'))
+
+        let rankProperties = []
+        Object.values(properties.data).forEach(async (propertie) => {
+            if (propertie.user !== localStorage.getItem('userId')) {
+                return
+            } else {
+                let infos = {
+                    id: propertie._id,
+                    title: propertie.name,
+                    rooms: propertie.rooms == "one-room" ? "1" : propertie.rooms == "two-rooms" ? "2" : "3+",
+                    bathrooms: propertie.bathrooms == "one-bathroom" ? "1" : propertie.bathrooms == "two-bathrooms" ? "2" : "3+",
+                    parkingSpaces: propertie.parkingSpaces == "one-vehicle" ? "1" : propertie.parkingSpaces == "more-vehicles" ? "2+" : "0",
+                    value: propertie.value,
+                    infrastructure: Object.values(propertie.infraestructure).length == 0 ? false : true,
+                    grill: Object.values(propertie.infraestructure).indexOf("grill") == -1 ? false : true,
+                    party: Object.values(propertie.infraestructure).indexOf("party-room") == -1 ? false : true,
+                    game: Object.values(propertie.infraestructure).indexOf("playroom") == -1 ? false : true,
+                    gym: Object.values(propertie.infraestructure).indexOf("gym") == -1 ? false : true,
+                    pool: Object.values(propertie.infraestructure).indexOf("pool") == -1 ? false : true,
+                    loundry: Object.values(propertie.infraestructure).indexOf("laundry") == -1 ? false : true,
+                    steam: Object.values(propertie.infraestructure).indexOf("steam-room") == -1 ? false : true,
+                }
+
+                rankProperties.push(
+                    < PropertieCard
+                        id={infos.id}
+                        title={infos.title}
+                        rooms={infos.rooms}
+                        bathrooms={infos.bathrooms}
+                        parkingSpaces={infos.parkingSpaces}
+                        value={infos.value}
+                        infrastructure={infos.infrastructure}
+                        grill={infos.grill}
+                        party={infos.party}
+                        game={infos.game}
+                        gym={infos.gym}
+                        pool={infos.pool}
+                        loundry={infos.loundry}
+                        steam={infos.steam}
+                    />
+                )
+            }
+        })
+
+        this.setState({ rankElements: rankProperties })
     }
 
     render() {
@@ -229,7 +277,7 @@ class PropertiesPage extends Component {
                             </button>
 
                             <button className="nav-link" id="nav-moving-tab" data-bs-toggle="tab" data-bs-target="#nav-moving" type="button" role="tab" aria-controls="nav-moving" aria-selected="false">
-                                Detalhes do Ranking
+                                Ranking de Imóveis
                             </button>
                         </div>
                     </nav>
@@ -244,7 +292,7 @@ class PropertiesPage extends Component {
                         <div className="tab-pane fade" id="nav-moving" role="tabpanel" aria-labelledby="nav-moving-tab">
                             {this.state.idealPropertyModal ? '' :
                                 <span className='rank-label'> <i> <AiFillWarning /> </i> Para usar essa funcionalidade você precisa cadastrar suas preferências! </span>}
-
+                            {this.state.rankElements}
 
                         </div>
                     </div>
