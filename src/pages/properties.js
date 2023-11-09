@@ -33,7 +33,7 @@ class PropertiesPage extends Component {
 
         let properties = await api.get('/property/all')
 
-        let propertieElements = []
+        let propertieElements = []        
         Object.values(properties.data).forEach((propertie) => {
             let infos = {
                 title: propertie.name,
@@ -71,6 +71,11 @@ class PropertiesPage extends Component {
                 />
             )
         })
+        if (propertieElements.length < 0) {
+            propertieElements.push(
+                <label className='not-propertie'> Você ainda não tem nenhum imóvel cadastrado! </label>
+            )
+        }
         this.setState({ propertieElements: propertieElements})
 
     }
