@@ -25,9 +25,9 @@ class Home extends Component {
                 <SideMenu/>
 
                 <div className='content-page'>
-                    <h1 style={{alignItems:"center"}}>Lista de Itens</h1>
+                    {/* <h1 style={{alignItems:"center"}}>Lista de Itens</h1> */}
                 </div>
-                    <iframe style={{background: "#F1F5F4;", border: "none;", 
+                    <iframe className="dashboard" style={{background: "#F1F5F4;", border: "none;", 
                                     borderRadius: "2px;", boxShadow: "0 2px 10px 0 rgba(70, 76, 79, .2);"}}
                             src="https://charts.mongodb.com/charts-liveasy-mzuoq/embed/dashboards?id=65497ed6-bd36-41cb-8bad-a98bf6888120&theme=light&autoRefresh=true&maxDataAge=1800&showTitleAndDesc=true"></iframe>
             </div>
