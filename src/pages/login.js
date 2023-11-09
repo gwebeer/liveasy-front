@@ -69,7 +69,7 @@ class AuthPage extends Component {
                 console.log(res)
                 if (res.status == 200) {
                     saveToken(res.data.token)
-                    window.location = 'http://localhost:3000';
+                    window.location = 'http://localhost:3000/home';
                 }
             })
             .catch(err => {

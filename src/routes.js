@@ -19,7 +19,7 @@ const Rotas = () => {
         <BrowserRouter>
             <Routes>
                 <Route path='/auth' element={<AuthPage />}>  </Route>
-                <Route path='/' element={<Home />}>  </Route>
+                <Route path='/home' element={<Home />}>  </Route>
                 <Route path='/register' element={<Register />}>  </Route>
                 <Route path='/resetPassword' element={<ResetPassword />}></Route>
 
@@ -31,7 +31,7 @@ const Rotas = () => {
                 <Route path='/coast-list' element={<CoastList/>}> </Route>
                 <Route path='/calendar' element={<Calendar/>}> </Route>
                 <Route path='/suggestion' element={<SuggestionList/>}> </Route>
-                <Route path='/admin' element={<App/>}> </Route>
+                <Route path='/*' element={<App/>}> </Route>
             </Routes>
         </BrowserRouter>
     )
