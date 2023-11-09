@@ -33,18 +33,18 @@ class PropertiesPage extends Component {
 
         let properties = await api.get('/property/all')
 
-        let propertieElements = []        
+        let propertieElements = []
         Object.values(properties.data).forEach((propertie) => {
             if (propertie.user !== localStorage.getItem('userId')) {
                 return
             } else {
                 let infos = {
                     title: propertie.name,
-                    rooms: propertie.rooms == "one-room" ? "1": propertie.rooms == "two-rooms" ? "2": "3+",
-                    bathrooms: propertie.bathrooms == "one-bathroom" ? "1": propertie.bathrooms == "two-bathrooms" ? "2": "3+",
-                    parkingSpaces: propertie.parkingSpaces == "one-vehicle" ? "1": propertie.parkingSpaces == "more-vehicles" ? "2+": "0",
+                    rooms: propertie.rooms == "one-room" ? "1" : propertie.rooms == "two-rooms" ? "2" : "3+",
+                    bathrooms: propertie.bathrooms == "one-bathroom" ? "1" : propertie.bathrooms == "two-bathrooms" ? "2" : "3+",
+                    parkingSpaces: propertie.parkingSpaces == "one-vehicle" ? "1" : propertie.parkingSpaces == "more-vehicles" ? "2+" : "0",
                     value: propertie.value,
-                    infrastructure: Object.values(propertie.infraestructure).length == 0 ? false: true,
+                    infrastructure: Object.values(propertie.infraestructure).length == 0 ? false : true,
                     grill: Object.values(propertie.infraestructure).indexOf("grill") == -1 ? false : true,
                     party: Object.values(propertie.infraestructure).indexOf("party-room") == -1 ? false : true,
                     game: Object.values(propertie.infraestructure).indexOf("playroom") == -1 ? false : true,
@@ -78,7 +78,7 @@ class PropertiesPage extends Component {
                 <label className='not-propertie'> Você ainda não tem nenhum imóvel cadastrado! </label>
             )
         }
-        this.setState({ propertieElements: propertieElements})
+        this.setState({ propertieElements: propertieElements })
 
     }
 
@@ -123,7 +123,7 @@ class PropertiesPage extends Component {
                                     Lista de Imóveis
                                 </button>
 
-                                <button className="nav-link" id="nav-moving-tab" data-bs-toggle="tab" data-bs-target="#nav-moving" type="button" role="tab" aria-controls="nav-moving" aria-selected="false">
+                                <button className="nav-link" id="nav-moving-tab" data-bs-toggle="tab" data-bs-target="#nav-moving" type="button" role="tab" aria-controls="nav-moving" aria-selected="true">
                                     Detalhes do Ranking
                                 </button>
                             </div>
@@ -131,16 +131,18 @@ class PropertiesPage extends Component {
 
                     </section>
 
-                    <section className='properties-list'>
+                    <section className='properties-body'>
                         <div className="tab-pane fade show active" id="properties-tab" role="tabpanel" aria-labelledby="properties-tab">
-
                             {this.state.propertieElements}
-
                         </div>
 
+
+                        <div className="tab-pane fade" id="nav-moving" role="tabpanel" aria-labelledby="nav-moving">
+
+                            {this.state.idealPropertyModal ? '' : "Testeee"}
+
+                        </div>
                     </section>
-
-
 
 
 
