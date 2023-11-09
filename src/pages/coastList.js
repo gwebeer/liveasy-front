@@ -64,7 +64,7 @@ class CoastList extends Component {
 
     render() {
         return (
-          <div className="item-list-page">
+          <div className="coast-list-page">
               <SideMenu />
             <div className="page-content">
               <div className='page-title'>
