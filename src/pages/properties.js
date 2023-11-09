@@ -116,35 +116,29 @@ class PropertiesPage extends Component {
                         </button>
                     </section>
 
-                    <section className='properties-header'>
-                        <nav>
-                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                                <button className="nav-link active" id="nav-properties-tab" data-bs-toggle="tab" data-bs-target="#properties-tab" type="button" role="tab" aria-controls="properties-tab" aria-selected="true">
-                                    Lista de Imóveis
-                                </button>
+                    <nav className='properties-header'>
+                        <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                            <button className="nav-link active" id="nav-personal-tab" data-bs-toggle="tab" data-bs-target="#nav-personal" type="button" role="tab" aria-controls="nav-personal" aria-selected="true">
+                                Lista de Imóveis
+                            </button>
 
-                                <button className="nav-link" id="nav-moving-tab" data-bs-toggle="tab" data-bs-target="#nav-moving" type="button" role="tab" aria-controls="nav-moving" aria-selected="true">
-                                    Detalhes do Ranking
-                                </button>
-                            </div>
-                        </nav>
+                            <button className="nav-link" id="nav-moving-tab" data-bs-toggle="tab" data-bs-target="#nav-moving" type="button" role="tab" aria-controls="nav-moving" aria-selected="false">
+                                Detalhes do Ranking
+                            </button>
+                        </div>
+                    </nav>
 
-                    </section>
+                    <section className="tab-content" id="nav-tabContent">
 
-                    <section className='properties-body'>
-                        <div className="tab-pane fade show active" id="properties-tab" role="tabpanel" aria-labelledby="properties-tab">
+                        <div className="tab-pane fade show active" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
                             {this.state.propertieElements}
                         </div>
 
 
-                        <div className="tab-pane fade" id="nav-moving" role="tabpanel" aria-labelledby="nav-moving">
-
-                            {this.state.idealPropertyModal ? '' : "Testeee"}
-
+                        <div className="tab-pane fade" id="nav-moving" role="tabpanel" aria-labelledby="nav-moving-tab">
+                            {this.state.idealPropertyModal ? '' : "Para essa funcionalidade você precisa cadastrar suas preferências!"}
                         </div>
                     </section>
-
-
 
                 </div>
             </div >
