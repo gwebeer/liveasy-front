@@ -34,7 +34,7 @@ class SideMenu extends Component {
                 </div>
 
                 <ul className='menu-options'>
-                    <li className='option' onClick={() => {window.location = "/"}}>
+                    <li className='option' onClick={() => {window.location = "/home"}}>
                         <i> <MdSpaceDashboard /> </i>
                         Início
                     </li>
