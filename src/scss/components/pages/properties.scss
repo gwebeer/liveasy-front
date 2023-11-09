@@ -127,4 +127,108 @@
             }
         }
     }
+
+
+
+    .propertie-card {
+        background-color: #b3d0d6;
+        border: 2px solid #023047;
+        height: 120px;
+        width: 65%;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        margin: 15px 0;
+
+        .propertie-info {
+            // background-color: #219EBC;
+            width: 75%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-right: 1px solid #849aa5;
+
+            .propertie-title {
+                display: flex;
+                flex-direction: row;
+                border-bottom: 1px solid #849aa5;
+                width: 100%;
+
+                button {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: start ;
+                    justify-content: center;
+                    padding: 0 10px;
+                    padding-top: 6px;
+                    margin-left: 10px;
+
+                    i {
+                        text-align: end;
+                    }
+                    span {
+                        font-size: 12px;
+                        margin-top: 3px;
+                        margin-left: 3px;
+                    }
+                }
+            }
+
+            .infrastructure {
+                font-size: 12px;
+                padding-left: 20px;
+
+                i {
+                    font-size: 20px;
+                }
+            }
+
+            h3 {
+                font-size: 22px;
+                font-weight: 800;
+                padding-bottom: 10px;
+            }
+        }
+
+        .propertie-value {
+            // background-color: #294850;
+            width: 25%;
+            font-size: 23px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #023047;
+            font-weight: 1000;
+
+            i {
+                font-size: 14px;
+            }
+        }
+
+
+
+        .icons {
+            display: flex;
+            flex-direction: row;
+
+            .detail {
+                margin: 7px;
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 15px 10px;
+        
+        .rank-label {
+            font-size: 18px;
+            font-weight: 800;
+            color: #FB8500;
+        }
+    }
+    
+    
+
 }

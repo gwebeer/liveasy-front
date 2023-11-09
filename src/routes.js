@@ -1,17 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ResetPassword from "./pages/ResetPassword.js";
-import Home from "./pages/home.js";
-import AuthPage from "./pages/login.js";
-import Register from "./pages/register.js";
-import Profile from "./pages/profile.js";
-import ItemList from "./pages/itemList.js";
-import CoastList from "./pages/coastList.js";
-import PropertiesPage from "./pages/properties.js";
-import IdealPropertie from "./pages/idealPropertie.js";
-import Calendar from "./pages/calendar.js";
-import NewItemList from "./pages/ItemListNew.js";
+import App from "./admin/admin.js";
 import SuggestionList from "./components/seggestion.js";
+import NewItemList from "./pages/ItemListNew.js";
+import ResetPassword from "./pages/ResetPassword.js";
+import Calendar from "./pages/calendar.js";
+import CoastList from "./pages/coastList.js";
+import Home from "./pages/home.js";
+import IdealPropertie from "./pages/idealPropertie.js";
+import AuthPage from "./pages/login.js";
 import NewPropertie from "./pages/newPropertie.js";
+import Profile from "./pages/profile.js";
+import PropertiesPage from "./pages/properties.js";
+import Register from "./pages/register.js";
+
 
 const Rotas = () => {
     return (
@@ -30,6 +31,7 @@ const Rotas = () => {
                 <Route path='/coast-list' element={<CoastList/>}> </Route>
                 <Route path='/calendar' element={<Calendar/>}> </Route>
                 <Route path='/suggestion' element={<SuggestionList/>}> </Route>
+                <Route path='/admin' element={<App/>}> </Route>
             </Routes>
         </BrowserRouter>
     )

@@ -20,7 +20,7 @@ class NewPropertie extends Component {
                 parkingSpaces: "",
                 furnished: "empty",
                 infraestructure: [],
-                forniture: [],
+                furniture: [],
                 name: "",
                 value: ""
             },
@@ -38,7 +38,7 @@ class NewPropertie extends Component {
         Object.values(await notBoughtItems.data).forEach((item) => {
             itemsElements.push(
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="forniture" id={item.title} onChange={this.form} />
+                    <input class="form-check-input" type="checkbox" name="furniture" id={item.title} onChange={this.form} />
                     <label class="form-check-label" for={item.title}>
                         {item.title}
                     </label>
@@ -54,15 +54,15 @@ class NewPropertie extends Component {
         let field = e.target.name
         let value = e.target.id
 
-        let fornitures = Object.values(newState.forniture)
-        if (field == "forniture") {
+        let furnitures = Object.values(newState.furniture)
+        if (field == "furniture") {
             if (e.target.checked) {
-                fornitures.push(value)
+                furnitures.push(value)
             } else {
-                let index = fornitures.indexOf(value)
-                fornitures.splice(index, 1)
+                let index = furnitures.indexOf(value)
+                furnitures.splice(index, 1)
             }
-            newState.forniture = fornitures
+            newState.furniture = furnitures
         }
 
         let infraestructures = Object.values(newState.infraestructure)
@@ -80,7 +80,7 @@ class NewPropertie extends Component {
             newState[e.target.id] = e.target.value
         }
 
-        if (field !== "forniture" && field !== "infraestructure" && field !== "textFields") {
+        if (field !== "furniture" && field !== "infraestructure" && field !== "textFields") {
             newState[field] = value
         }
 
@@ -89,6 +89,7 @@ class NewPropertie extends Component {
 
     async addPropertie(e) {
         e.preventDefault();
+        console.log(this.state.propertieForm)
 
         await api.post('/property/add', this.state.propertieForm)
             .then((response) => {
