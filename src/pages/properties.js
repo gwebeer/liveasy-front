@@ -9,8 +9,8 @@ import { MdOutdoorGrill } from 'react-icons/md';
 import { LiaGrinBeamSweat } from 'react-icons/lia';
 import { CgGym } from 'react-icons/cg';
 import { RiBilliardsFill } from 'react-icons/ri';
-import { AiFillPlusCircle } from 'react-icons/ai';
-import { getIdealProperty, idealPropertieValidation } from '../SupportFunctions';
+import { AiFillPlusCircle, AiFillWarning } from 'react-icons/ai';
+import { getIdealProperty, getItemList, idealPropertieValidation } from '../SupportFunctions';
 import PropertieCard from '../components/propertieCard';
 
 
@@ -31,10 +31,19 @@ class PropertiesPage extends Component {
             this.setState({ idealPropertyModal: false })
         }
 
+        let items = await getItemList(localStorage.getItem('processId'))
+        let notBought = []
+        Object.values(items).forEach((value) => {
+            console.log(value)
+            if (!value.bought) {
+                notBought.push(value.title)
+            }
+        })
+
         let properties = await api.get('/property/all')
 
         let propertieElements = []
-        Object.values(properties.data).forEach((propertie) => {
+        Object.values(properties.data).forEach(async (propertie) => {
             if (propertie.user !== localStorage.getItem('userId')) {
                 return
             } else {
@@ -71,6 +80,11 @@ class PropertiesPage extends Component {
                         steam={infos.steam}
                     />
                 )
+
+                // if (!this.state.idealPropertyModal) {
+                await this.setRanking(idealPropertyRegister, propertie, notBought)
+                // }
+
             }
         })
         if (propertieElements.length === 0) {
@@ -80,6 +94,96 @@ class PropertiesPage extends Component {
         }
         this.setState({ propertieElements: propertieElements })
 
+    }
+
+    async setRanking(idealPropertie, propertie, notBought) {
+        let score = 0;
+
+        // Validação isForRent
+        if (idealPropertie.isForRent && propertie.isForRent == "rent" || !idealPropertie.isForRent && propertie.isForRent == "buy") {
+            score++;
+        }
+
+        // Validação type
+        if (idealPropertie.propertyType == "apartament" && propertie.type == "apartament" ||
+            idealPropertie.propertyType == "house" && propertie.type == "house" ||
+            idealPropertie.propertyType == "loft" && propertie.type == "loft") {
+            score++;
+        }
+
+        // Validação condomínio
+        if (idealPropertie.isCondominium && propertie.isCondominium == "condominium" || !idealPropertie.isCondominium && propertie.isCondominium == "street") {
+            score++;
+        }
+
+        // Validação estruturas
+        Object.values(propertie.infraestructure).forEach((infra) => {
+            // Verifica se tem no ideal
+            if (Object.values(idealPropertie.infraestructure).indexOf(infra) == -1) {
+                score++;
+            } else {
+                score++;
+                score++;
+            }
+        })
+
+        // Validação quartos
+        let roomNumber = propertie.rooms == "one-room" ? 1 : propertie.rooms == "two-rooms" ? 2 : 3
+        let idealRoomNumber = idealPropertie.rooms
+
+        if (roomNumber > idealRoomNumber) {
+            score++
+        } if (roomNumber == idealRoomNumber) {
+            score++
+            score++
+        }
+
+        // Validação banheiros
+        let bathroomNumber = propertie.bathrooms == "one-bathroom" ? 1 : propertie.bathrooms == "two-bathrooms" ? 2 : 3
+        let idealBathroomNumber = idealPropertie.bathrooms
+
+        if (bathroomNumber > idealBathroomNumber) {
+            score++
+        } if (bathroomNumber == idealBathroomNumber) {
+            score++
+            score++
+        }
+
+        // Validação vagas
+        let parkingSpacesNumber = propertie.parkingSpaces == "no-vehicle" ? 0 : propertie.parkingSpaces == "one-vehicle" ? 1 : 2
+        let idealParkingSpacesNumber = idealPropertie.parkingSpaces
+
+        if (parkingSpacesNumber > idealParkingSpacesNumber) {
+            score++
+        } if (parkingSpacesNumber == idealParkingSpacesNumber) {
+            score++
+            score++
+        }
+
+        // Validação furnished
+        if (idealPropertie.isFurnished && propertie.furnished == "furnished" || !idealPropertie.isFurnished && propertie.furnished == "empty") {
+            score++;
+        }
+
+        // Validação Mobílias
+        Object.values(propertie.furniture).forEach(async (item) => {
+
+            if (notBought.indexOf(item) == -1) {
+                score++
+            } else {
+                score++
+                score++
+            }
+        })
+
+        let putInfo = {
+            user: localStorage.getItem('userId'),
+            score: score
+        }
+
+        // console.log("Aqui")
+        // let rank = await api.put('/property', putInfo)
+        // console.log(rank)
     }
 
     render() {
@@ -128,7 +232,7 @@ class PropertiesPage extends Component {
                         </div>
                     </nav>
 
-                    <section className="tab-content" id="nav-tabContent">
+                    <div className="tab-content" id="nav-tabContent">
 
                         <div className="tab-pane fade show active" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
                             {this.state.propertieElements}
@@ -136,10 +240,12 @@ class PropertiesPage extends Component {
 
 
                         <div className="tab-pane fade" id="nav-moving" role="tabpanel" aria-labelledby="nav-moving-tab">
-                            {this.state.idealPropertyModal ? '' : "Para essa funcionalidade você precisa cadastrar suas preferências!"}
-                        </div>
-                    </section>
+                            {this.state.idealPropertyModal ? '' :
+                                <span className='rank-label'> <i> <AiFillWarning /> </i> Para usar essa funcionalidade você precisa cadastrar suas preferências! </span>}
 
+
+                        </div>
+                    </div>
                 </div>
             </div >
 
